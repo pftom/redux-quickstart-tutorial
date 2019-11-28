@@ -1,11 +1,11 @@
 name: Redux 快速入门教程
-description: ""
+description: ''
 topics:
   - Redux
 categories:
-  - ""
+  - ''
   - React
-  - ""
+  - ''
 id: 4ada16faecf470bf265f52276bdc9170
 created: 2019-11-28T12:13:49.486Z
 updated: 2019-11-28T12:13:49.486Z
@@ -47,4 +47,4 @@ steps:
       - file: tuture.yml
       - file: yarn.lock
         display: false
-github: "https://github.com/pftom/redux-quickstart-tutorial"
+github: 'https://github.com/pftom/redux-quickstart-tutorial'
