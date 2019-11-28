@@ -1,0 +1,99 @@
+name: Redux 快速入门教程
+description: ''
+topics:
+  - Redux
+categories:
+  - ''
+  - React
+  - ''
+id: 4ada16faecf470bf265f52276bdc9170
+created: 2019-11-28T12:13:49.486Z
+updated: 2019-11-28T12:13:49.486Z
+steps:
+  - name: Store
+    commit: 247a3db
+    diff:
+      - file: package.json
+        display: true
+      - file: src/components/App.js
+        display: true
+      - file: src/index.js
+        display: true
+      - file: yarn.lock
+        display: true
+    outdated: true
+  - name: 准备代码
+    commit: 5410e9e
+    diff:
+      - file: .gitignore
+      - file: README.md
+        display: true
+      - file: package.json
+        display: true
+      - file: public/favicon.ico
+        display: true
+      - file: public/index.html
+        display: true
+      - file: public/logo192.png
+        display: true
+      - file: public/logo512.png
+        display: true
+      - file: public/manifest.json
+        display: true
+      - file: public/robots.txt
+        display: true
+      - file: src/components/AddTodo.js
+        display: true
+      - file: src/components/App.js
+        display: true
+      - file: src/components/Footer.js
+        display: true
+      - file: src/components/Link.js
+        display: true
+      - file: src/components/Todo.js
+        display: true
+      - file: src/components/TodoList.js
+        display: true
+      - file: src/index.js
+        display: true
+      - file: tuture.yml
+      - file: yarn.lock
+        display: true
+    outdated: true
+  - name: 准备代码
+    commit: 8b87643
+    diff:
+      - file: .gitignore
+      - file: README.md
+        display: true
+      - file: package.json
+        display: true
+      - file: public/favicon.ico
+        display: true
+      - file: public/index.html
+        display: true
+      - file: public/logo192.png
+        display: true
+      - file: public/logo512.png
+        display: true
+      - file: public/manifest.json
+        display: true
+      - file: public/robots.txt
+        display: true
+      - file: src/components/AddTodo.js
+        display: true
+      - file: src/components/App.js
+        display: true
+      - file: src/components/Footer.js
+        display: true
+      - file: src/components/Link.js
+        display: true
+      - file: src/components/Todo.js
+        display: true
+      - file: src/components/TodoList.js
+        display: true
+      - file: src/index.js
+        display: true
+      - file: yarn.lock
+        display: true
+github: 'https://github.com/pftom/redux-quickstart-tutorial'
