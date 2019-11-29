@@ -16,9 +16,9 @@ categories:
   - ''
 id: 4ada16faecf470bf265f52276bdc9170
 created: '2019-11-28T12:13:49.486Z'
-updated: 2019-11-29T07:17:29.509Z
+updated: 2019-11-29T07:18:59.675Z
 steps:
-  - name: 总览
+  - name: 在我们阅读教程之前
     commit: f706830
     diff:
       - file: .gitignore
