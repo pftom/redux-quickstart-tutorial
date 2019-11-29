@@ -16,7 +16,7 @@ categories:
   - ''
 id: 4ada16faecf470bf265f52276bdc9170
 created: '2019-11-28T12:13:49.486Z'
-updated: 2019-11-29T07:18:59.675Z
+updated: 2019-11-29T09:14:45.196Z
 steps:
   - name: 在我们阅读教程之前
     commit: f706830
@@ -152,4 +152,155 @@ steps:
 
 
 
+  - name: 开始 Redux 之旅
+    commit: 0526fa5
+    diff:
+      - file: package.json
+        display: true
+        explain:
+          pre: >-
+            ### 准备初始代码
+
+
+            将初始 React 代码模板 Clone 到本地：
+
+
+            ```Bash
+
+            git clone
+            https://github.com/pftom/redux-quickstart-tutorial/tree/initial-code
+
+            ```
+
+
+            安装项目依赖：
+
+
+            ```Bash
+
+            cd redux-quickstart-tutorial
+
+            npm install
+
+            npm start
+
+            ```
+
+
+            接着 React 开发服务器会打开浏览器，如果你看到下面的效果，并且可以进行操作，那么代表代码准备完成：
+
+
+            ![![](tuture-assets/image-51c89987a1725452.png)](tuture-assets/image-c272df98562701e3.png)
+
+
+            ### 探索初始代码
+
+
+            我们完成的这个待办事项小应用比较简单，我们希望展示一个 todo 列表，当一个  todo 被点击时，它将被加上删除线表示此 todo
+            已经完成，我们还加上了一个输入框，使得用户可以增加新的 todo。在底部，我们展示了三个按钮，可以切换展示 todo 的类型。
+
+
+            我们的整份 React 代码组件设计如下，首先是组件，然后是组件所拥有的属性：
+
+
+            - `TodoList` 用来展示 todo 列表：
+              -  `todos: Array` 是一个 todo 数组，它其中的每个元素的样子类似 `{ id, text, completed }`。
+              - `toggleTodo(id: number)` 是当一个 todo 被点击时会调用的回调函数。 
+            - `Todo` 是单一 todo 组件：
+              - `text: string` 是这个 todo 将显示的内容。
+              - `completed: boolean` 用来表示是否完成，如果完成，那么样式上就会给这个元素划上删除线。
+              - `onClick()` 是当这个 todo 被点击时将调用的回调函数。
+            - `Link` 是一个展示过滤的按钮：
+              - `active: boolean` 代表此时被选中，那么此按钮将不能被点击
+              - `onClick()` 表示这个 link 被点击时将调用的回调函数。
+              - `children: ReactComponent` 展示子组件
+            - `Footer` 用于展示三个过滤按钮：
+              - `filter: string` 代表此时的被选中的过滤器字符串，它是 `[SHOW_ALL, SHOW_COMPLETED, SHOW_ACTIVE]` 其中之一。
+              - `setVisibilityFilter()` 代表 Link 被点击时将设置对应被点击的 `filter` 的回调函数。
+            - `App` 是 React 根组件，最终组合其他组件并使用 ReactDOM 对其进行编译渲染，我们在它的 `state`
+            上定义了上面的几个组件会用到的属性，同时定义了其他组件会用到的方法，还有
+            `nextTodoId`，`VisibilityFilters`，`getVisibleTodos` 等一些辅助函数。
+
+
+            ### 准备 Redux 环境
+
+
+            我们知道 Redux 可以与多种视图层开发框架如 React，Vue  和 Angular 等搭配使用，而 Redux
+            只是一个状态管理容器，所以为了在 React 中使用 Redux，我们还需要安装一下对应的依赖。
+
+
+            ```Bash
+
+            npm install redux
+
+            npm install react-redux
+
+            ```
+
+
+            最后我们的 `package.json` 文件的内容应该发生了下面的变化：
+          post: >-
+            ### 小结
+
+
+            我们首先给出一张 Redux 概览图，然后详细解释了概览图的三个部分。
+
+
+            在你对 Redux 有个初步的了解的基础上，我们引导你将初始的 React 模板代码 Clone
+            到了本地，并且安装了相关依赖，开启了开发服务器，这样你可以看到初始的用 React 实现的效果。
+
+
+            接着我们通过解释每一个组件的形式来整体介绍了我们现有的这份 React 初始模板的含义，以及它的组成部分和对应的作用。
+
+
+            最后我们安装了在 React 中使用 Redux 的必要依赖。
+
+
+            做得好！现在一切已经准备就绪，相信你已经迫不及待的想要编写一点 Redux 相关的代码了，别担心，在下一节中，我们将引出 Redux
+            Store 的详细概念，并且通过代码讲解它将替换 React  的哪个部分。
+      - file: yarn.lock
+        display: false
+    explain:
+      pre: >-
+        不管外界把  Redux 吹得如何天花乱坠，实际上它可以用一张图来概括，这张图也有利于帮助你思考前端它的本质是什么：
+
+
+        ![](tuture-assets/image.png)
+
+
+        我们先来详解一下这张图，并且在教程之后的内容中，你会多次看到这张图以不同的形式出现，我们希望学完本篇教程之后，每当你想起 Redux
+        时，脑海里就是这张图：
+
+
+        ### View
+
+
+        首先我们来看 View ，在前端开发中，我们称这个为视图层，就是展示给最终用户的效果，在本篇教程的学习中，我们的 View 就是 React。
+
+
+        ### Store
+
+
+        随着前端应用要完成的工作越来越丰富，我们对前端也提出了要保持 “状态” 的要求，在 React 中，这个 “状态” 就是
+        `this.state`。在 Redux 中，这个状态就是 Store。
+
+
+        这个 Store 从抽象意义上来说可以看做一个前端的 “数据库”，它保存着前端的状态（state），并且分发这些状态给 View，使得 View
+        根据这些状态渲染不同的内容。
+
+
+        注意到，Redux 是一个可预测的 JavaScript 应用状态管理容器，这个状态容器就是这里的 Store。
+
+
+        ### Reducers
+
+
+        我们日常生活中看到的网页，它不是一成不变的，而是会响应用户的 “动作”，无论是页面跳转也好，还是登陆注册也好。
+
+
+        这里的 “动作” 可能是一次性的或者临时的，那么我们需要短暂的记录这一动作，而 Reducers 就是用来更新 Store 来记录这些 
+        “动作” 带来的修改的一个个函数。
+
+
+        当我们对三个核心概念有一个粗略的认知之后，我们就可以开始 Redux 的学习了。
 github: 'https://github.com/pftom/redux-quickstart-tutorial'
