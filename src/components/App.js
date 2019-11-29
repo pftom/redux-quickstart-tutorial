@@ -3,6 +3,8 @@ import AddTodo from "./AddTodo";
 import TodoList from "./TodoList";
 import Footer from "./Footer";
 
+import { connect } from "react-redux";
+
 let nextTodoId = 0;
 
 export const VisibilityFilters = {
@@ -27,11 +29,6 @@ const getVisibleTodos = (todos, filter) => {
 class App extends React.Component {
   constructor(props) {
     super(props);
-
-    this.state = {
-      todos: [],
-      filter: VisibilityFilters.SHOW_ALL
-    };
 
     this.toggleTodo = this.toggleTodo.bind(this);
     this.onSubmit = this.onSubmit.bind(this);
@@ -68,7 +65,7 @@ class App extends React.Component {
   }
 
   render() {
-    const { todos, filter } = this.state;
+    const { todos, filter } = this.props;
 
     return (
       <div>
@@ -86,4 +83,9 @@ class App extends React.Component {
   }
 }
 
-export default App;
+const mapStateToProps = (state, props) => ({
+  todos: state.todos,
+  filter: state.filter
+});
+
+export default connect(mapStateToProps)(App);
