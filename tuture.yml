@@ -16,7 +16,7 @@ categories:
   - ''
 id: 4ada16faecf470bf265f52276bdc9170
 created: '2019-11-28T12:13:49.486Z'
-updated: 2019-11-30T08:14:11.580Z
+updated: 2019-11-30T09:17:23.618Z
 steps:
   - name: 在我们阅读教程之前
     commit: f706830
@@ -318,7 +318,7 @@ steps:
 
 
             在   `src/index.js`  中做出如下修改：
-          post: >-
+          post: >
             可以看到，上面的代码做了下面几下工作：
 
 
@@ -347,6 +347,16 @@ steps:
             - 最后我们在 `App` 组件的最外层使用 `Provider` 包裹，并接收我们上一步创建的 `store`
             作为参数，这确保之后我们可以在子组件中访问到 store 中的状态。`Provider` 是 `react-redux` 提供的
             API，是 Redux 在 React 使用的绑定库，它搭建起 Redux 和 React 交流的桥梁。
+
+
+
+            ::: info
+
+            **VisibilityFilters** 是定义在 `src/components/App.js`
+            中的一个对象常量，里面保存了三种过滤器类型字符，`{ SHOW_ALL, SHOW_COMPLETED, SHOW_ACTIVE
+            }`，分别对应我们待办事项底部的三个过滤按钮：`All`, `Active`, `Completed`。
+
+            :::
       - file: src/components/App.js
         display: true
         explain:
@@ -367,9 +377,10 @@ steps:
 
             - 然后在文件底部，我们定义了一个 `mapStateToProps` 箭头函数，它接收 `state` 和 `props` ，这个
             `state`  就是我们那颗 Store 里面保存的 JavaScript 对象状态树，目前就是我们在上一个文件中定义的 
-            `initialState` 内容；这个 `props` 就是我们熟悉的原 React 组件的 `props`。
-            `mapStateToProps` 函数就是可以同时操作组件的原 `props` 和 Store 的状态，然后合并成最终的组件
-            props，（当然这里我们并没有使用原组件 props 内容）并通过 `connect` 函数传递给 `App` 组件。
+            `initialState` 内容；这个 `props` 就是我们熟悉的原 React 组件的 `props`，它对于
+            `mapStateToProps` 是一个可选参数。 `mapStateToProps` 函数就是可以同时操作组件的原 `props`
+            和 Store 的状态，然后合并成最终的组件 props，（当然这里我们并没有使用原组件 props 内容）并通过 `connect`
+            函数传递给 `App` 组件。
 
             - `connect` 函数接收 `mapStateProps` 函数，获取 `mapStateProps`
             返回的最终组合后的状态，然后将其注入到 `App` 组件中，返回一个新的组件，然后交给 `export default` 导出。
