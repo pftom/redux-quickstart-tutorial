@@ -27,7 +27,25 @@ const initialState = {
 };
 
 const rootReducer = (state, action) => {
-  return state;
+  switch (action.type) {
+    case "ADD_TODO": {
+      const { todos } = state;
+
+      return {
+        ...state,
+        todos: [
+          ...todos,
+          {
+            id: action.id,
+            text: action.text,
+            completed: false
+          }
+        ]
+      };
+    }
+    default:
+      return state;
+  }
 };
 
 const store = createStore(rootReducer, initialState);
