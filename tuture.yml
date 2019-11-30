@@ -16,7 +16,7 @@ categories:
   - ''
 id: 4ada16faecf470bf265f52276bdc9170
 created: '2019-11-28T12:13:49.486Z'
-updated: 2019-11-29T09:14:45.196Z
+updated: 2019-11-30T08:14:11.580Z
 steps:
   - name: 在我们阅读教程之前
     commit: f706830
@@ -281,8 +281,8 @@ steps:
         ### Store
 
 
-        随着前端应用要完成的工作越来越丰富，我们对前端也提出了要保持 “状态” 的要求，在 React 中，这个 “状态” 就是
-        `this.state`。在 Redux 中，这个状态就是 Store。
+        随着前端应用要完成的工作越来越丰富，我们对前端也提出了要保持 “状态” 的要求，在 React 中，这个 “状态” 将保存在
+        `this.state`。在 Redux 中，这个状态将保存在 Store。
 
 
         这个 Store 从抽象意义上来说可以看做一个前端的 “数据库”，它保存着前端的状态（state），并且分发这些状态给 View，使得 View
@@ -303,4 +303,216 @@ steps:
 
 
         当我们对三个核心概念有一个粗略的认知之后，我们就可以开始 Redux 的学习了。
+  - name: '理解 Store:数据的唯一真相来源'
+    commit: daa3220
+    diff:
+      - file: src/index.js
+        display: true
+        explain:
+          pre: >-
+            ### 打湿你的双手
+
+
+            了解了 Redux Store 之于 React 的作用之后，我们马上在 React 应用 Redux ，看看神奇的 Store
+            是如何介入并产生如此大的变化的。
+
+
+            在   `src/index.js`  中做出如下修改：
+          post: >-
+            可以看到，上面的代码做了下面几下工作：
+
+
+            - 我们首先进行了导包操作，从 `redux` 中导出了 `createStore`，从 `react-redux` 导出了
+            `Provider`，从 `src/components/App.js` 中导出了 `VisibilityFilters` 。
+
+            - 接着我们定义了一个 `initialState` 对象，这将作为我们之后创建 Store 的初始状态数据，也是我们之前提到的那颗
+            JavaScript 对象树的初始值。
+
+            - 然后我们定义了一个 `rootReducer` 函数，它是一个箭头函数，接收 `state` 和 `action` 然后返回
+            `state` ，这个函数目前还没有完成任何工作，但是它是创建 Store 所必须的参数之一，我们将在之后的 Reducers
+            中详细讲解它。
+
+
+
+            ::: warning
+
+            Reducers 替换成锚点
+
+            :::
+
+
+            - 再接着，我们调用之前导出的 Redux API： `createStore` 函数，传入定义的 `rootReducer` 和
+            `initialState` ，生成了我们本节的主角：store！
+
+            - 最后我们在 `App` 组件的最外层使用 `Provider` 包裹，并接收我们上一步创建的 `store`
+            作为参数，这确保之后我们可以在子组件中访问到 store 中的状态。`Provider` 是 `react-redux` 提供的
+            API，是 Redux 在 React 使用的绑定库，它搭建起 Redux 和 React 交流的桥梁。
+      - file: src/components/App.js
+        display: true
+        explain:
+          pre: >-
+            现在我们已经创建了 Store，并使用了 React 与 Redux 的绑定库 `react-redux` 提供的 `Provider`
+            组件将 Store 与 React 组件组合在了一起。
+
+
+            现在我们马上来看一下整合 Store 与 React 之后的效果。
+
+
+            打开 `src/components/App.js` ，对文件内容作出如下修改：
+          post: >+
+            可以看到，上面的代码做了这几项工作：
+
+
+            - 首先我们从 `react-redux` 绑定库里面导出了 `connect` 函数。
+
+            - 然后在文件底部，我们定义了一个 `mapStateToProps` 箭头函数，它接收 `state` 和 `props` ，这个
+            `state`  就是我们那颗 Store 里面保存的 JavaScript 对象状态树，目前就是我们在上一个文件中定义的 
+            `initialState` 内容；这个 `props` 就是我们熟悉的原 React 组件的 `props`。
+            `mapStateToProps` 函数就是可以同时操作组件的原 `props` 和 Store 的状态，然后合并成最终的组件
+            props，（当然这里我们并没有使用原组件 props 内容）并通过 `connect` 函数传递给 `App` 组件。
+
+            - `connect` 函数接收 `mapStateProps` 函数，获取 `mapStateProps`
+            返回的最终组合后的状态，然后将其注入到 `App` 组件中，返回一个新的组件，然后交给 `export default` 导出。
+
+            - 经过上面的工作，我们在 `App` 组件中就可以取到通过 `mapStateToProps` 返回的 `{ todos,
+            filter }` 内容了，我们通过对象结构，从 `this.props` 拿到 `todos` 和 `filter` 属性。
+
+            - 最后我们删除不再需要的 `constructor` 中的 `this.state` 内容。
+
+
+
+            ::: info
+
+            **注意**
+
+
+            这里之所以我们能在 `App` 组件中通过 `mapStateToProps` 拿到 Store 中保存的 JavaScript
+            对象状态树，是因为我们在之前通过 `Provider` 包裹了 `App` 组件，并将 `store` 作为属性传递给了
+            `Provider`。
+
+            :::
+
+
+
+            ### 再现 Redux 环形图
+
+
+            ![![](tuture-assets/image-f650ac40893ad6fd.png)](tuture-assets/image-452906c4c6e9dce3.png)
+
+
+            现在再来看一看我们在第一步骤中提到的图例，我们现在处于这个流程的第一步，即将 Store 里面的状态传递到 View 中，具体我们是通过
+            React 的 Redux 绑定库 `react-redux` 中的 `connect` 实现的。
+
+    explain:
+      pre: >-
+        我们前面提到了 Store 在 Redux 中的作用是用来保存状态的，相当于我们在前端建立了一个简单的
+        ”数据库“，在目前的富状态前端应用中，如果每一次状态的修改，比如我点击一个按钮，都需要与后端通信，那么整个网站应用的体验将糟糕透顶。
+
+
+
+        ::: info
+
+        根据不完全统计：”一个网站能留住一名用户的时间只有8S，如果你在8S内不能吸引住用户，或者出现了网站出现了问题，那么你将彻底的丢失这名用户！”
+
+        :::
+
+
+        所以为了适应用户的访问需求，聪明的前端拓荒者们开始将后端的 “数据库” 理念引进前端中，为前端也上了一个
+        “数据库”，这样大多数的前端状态可以直接在前端搞定，完全不需要后端的介入。
+
+
+        ### 罪恶的 React State
+
+
+        在 React 中，我们将状态存在每个组件的 `this.state` 中，每个组件的 `state`
+        为组件所私有，我们想要在一个组件中操作另外一个组件就需要相当繁琐的实现。
+
+
+        我们将用下面这张图来讲解一下这些繁琐之处：
+
+
+        ![](tuture-assets/image-fc337c2c5936372a.png)
+
+
+        即组件B想要操作组件C，那么它首先不需要调用父组件A传给它的 `handleClick` 方法，然后通过这个方法修改父组件A的
+        `state`，进而通过 React 的自动重新渲染机制，触发组件 C 的变化。
+
+
+        现在组件 B 和组件 C 是处于平级的，你可能还感觉不到这种跨组件改变有什么问题，让我们再来看一张图：
+
+
+        ![](tuture-assets/image-a16996b94b001828.png)
+
+
+        我们看到上面这张图，组件 B 和组件 C 相差了很多级，图中的 n 可能为10，也可能更多，这个时候你在想在组件 B 中修改组件
+        C，那就要把这个 `handleClick` 方法一层一层的往下传，当要修改的时候，再进行调用，这已经显得相当繁琐了。
+
+
+        如果组件 C离组件A还有很深的层级，情况就更复杂了：
+
+
+        ![](tuture-assets/image-b60dccc2228876a7.png)
+
+
+        这时候，不仅要把 `handleClick` 方法通过很深的层级传给组件 B，当组件 B 调用 `hanldeClick` 方法时，修改组件 A
+        的 `state`，再反过来传递给组件 C时，组件 A 到组件 C
+        之间的所有组件都会触发重新渲染，这带来了巨额的渲染开销，当我们的应用越来越复杂，这种开销显然是承受不起的。
+
+
+        ### 解救者：Store
+
+
+        React 诞生的初衷就是为了更好，更高效率的编写用户界面 ，它不应该也不需要来承担状态管理的职责。
+
+
+        于是备受折磨的前端拓荒者们构想出了伟大的 Store。我们完全不需要让每个组件单独保持状态，直接抽离所有组件的状态，类比 React
+        组件树，构造一个中心化的状态树，这颗状态树与 React 组件树一一对应，相当于对 React 组件树进行了状态化建模：
+
+
+        ![](tuture-assets/image-2caca42ea90c2b26.png)
+
+
+        可以看到，我们将组件的 state 去掉，取而代之的是一颗状态树，它是一个普通的 JavaScript
+        对象，通过对象的嵌套来类比组件的嵌套组合，这颗由 JavaScript 对象建模的状态树就是 Redux 中的 Store。
+
+
+        当我们将组件的状态抽离出去之后，我们在使用组件 B 操作组件 C 就变得相当简单且高效。
+
+
+        ![](tuture-assets/image-5c903471bbce55b3.png)
+
+
+        我们在组件 B 中发起一个更新状态 C 的动作，此动作对应的更新函数更新 Store 状态树，之后将更新后的状态 C 传递给组件 C，触发组件
+        C 的重新渲染。
+
+
+        可以看到，当我们引入这种机制之后，组件 B 与组件 C 之间的交互就单独发生了，不会影响 React 组件树中的其他组件，也不需要传递很深层级的
+        `handleClick` 函数了，再也不需要把更新后的 `state` 一层一层的传给组件 C，还要耗费性能的影响所有中间的组件了。
+
+
+        有了 Redux Store 之后，所有 React 应用中的状态修改都是对这颗 JavaScript 对象树的修改，所有状态的获取都是从这颗
+        JavaScript 对象树获取，这颗 JavaScript 对象代表的状态树成了整个应用的 “数据的唯一真相来源”。
+      post: >
+        保存改变的内容，如果你的 React 开发服务器打开着，那么你应该可以在浏览器中看到如下内容：
+
+
+        ![](tuture-assets/image-9711dbe24f236c42.png)
+
+
+        恭喜你！你已经成功编写了 Redux 的 Store，完成将 Redux 整合进 React 工作的 1/3。 通过在 React 中接入
+        Store，你成功的将 Redux 和 React 之间的数据打通，并删除了 `this.state` ，使用 Store 的状态来取代
+        `this.state`。
+
+
+        但是！当你此时点击 `Add Todo` 按钮，你的浏览器应该会显示出红色的错误，因为我们已经删除了 `this.state` 的内容，所以在
+        `onSubmit` 方法中读取 `this.state.todos` 就会报错。别担心，我们将在下一节中： `Action`
+        中讲解如何解决这些错误。
+
+
+
+        ::: warning
+
+        Action 替换成锚点
+
+        :::
 github: 'https://github.com/pftom/redux-quickstart-tutorial'
