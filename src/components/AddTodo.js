@@ -1,6 +1,8 @@
 import React from "react";
+import { connect } from "react-redux";
+import { addTodo } from "../actions";
 
-const AddTodo = ({ onSubmit }) => {
+const AddTodo = ({ dispatch }) => {
   let input;
 
   return (
@@ -11,7 +13,7 @@ const AddTodo = ({ onSubmit }) => {
           if (!input.value.trim()) {
             return;
           }
-          onSubmit(input.value);
+          dispatch(addTodo(input.value));
           input.value = "";
         }}
       >
@@ -22,4 +24,4 @@ const AddTodo = ({ onSubmit }) => {
   );
 };
 
-export default AddTodo;
+export default connect()(AddTodo);

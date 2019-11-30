@@ -5,8 +5,6 @@ import Footer from "./Footer";
 
 import { connect } from "react-redux";
 
-let nextTodoId = 0;
-
 export const VisibilityFilters = {
   SHOW_ALL: "SHOW_ALL",
   SHOW_COMPLETED: "SHOW_COMPLETED",
@@ -31,7 +29,6 @@ class App extends React.Component {
     super(props);
 
     this.toggleTodo = this.toggleTodo.bind(this);
-    this.onSubmit = this.onSubmit.bind(this);
     this.setVisibilityFilter = this.setVisibilityFilter.bind(this);
   }
 
@@ -42,19 +39,6 @@ class App extends React.Component {
       todos: todos.map(todo =>
         todo.id === id ? { ...todo, completed: !todo.completed } : todo
       )
-    });
-  }
-
-  onSubmit(value) {
-    this.setState({
-      todos: [
-        ...this.state.todos,
-        {
-          id: nextTodoId++,
-          text: value,
-          completed: false
-        }
-      ]
     });
   }
 
@@ -69,7 +53,7 @@ class App extends React.Component {
 
     return (
       <div>
-        <AddTodo onSubmit={this.onSubmit} />
+        <AddTodo />
         <TodoList
           todos={getVisibleTodos(todos, filter)}
           toggleTodo={this.toggleTodo}
