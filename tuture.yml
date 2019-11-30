@@ -16,7 +16,7 @@ categories:
   - ''
 id: 4ada16faecf470bf265f52276bdc9170
 created: '2019-11-28T12:13:49.486Z'
-updated: 2019-11-30T12:57:29.892Z
+updated: 2019-11-30T14:18:38.813Z
 steps:
   - name: 在我们阅读教程之前
     commit: f706830
@@ -724,4 +724,85 @@ steps:
         加入 Reducers 锚点
 
         :::
+  - name: 'Reducers: 整个一纯函数'
+    commit: daabb3a
+    diff:
+      - file: src/index.js
+        display: true
+        explain:
+          pre: >-
+            ### 准备响应 Action 的修改
+
+
+            当了解了 Reducer 的概念之后，我们马上在应用中响应我们之前 `dispatch` 的
+            Action，来弥补我们在上一节中留下的遗憾。
+
+
+            打开 `src/index.js`，对文件中相关内容作出如下修改：
+          post: >-
+            可以看到，我们将之前的 `rootReducer` 进行改进，从单纯的返回原来的 `state`，变成了一个 `switch` 语句，在
+            `switch` 语句中对 action 的 `type` 进行判断，然后做出对应的处理。
+
+
+            当 `action.type` 的类型为 `"ADD_TODO"` 时
+    explain:
+      pre: >
+        在这一节中，我们马上来了结上一节中留下的遗憾，即我们好像放了一声空炮，`dispatch` 了一个 Action，但是没有收获任何效果。
+
+
+        让我们继续祭出万能的 Redux 状态循环图：
+
+
+        ![](tuture-assets/image-53ba42d64819a34a.png)
+
+
+        我们已经完成了前两步了，离 Redux 整合进 React 只剩下最后一个步骤，即响应从组件中 `dispatch` 出来 Action，并更新
+        Store 中的状态，这在 Redux 的概念中被称之为 Reducers。
+
+
+        ### 纯化的 Reducers
+
+
+        `reducer` 是一个普通的 JavaScript 函数，它接收两个参数：`state` 和 `action`，前者为 Store
+        中存储的那颗 JavaScript 对象状态树，后者即为我们在组件中 `dispatch` 的那个 Action。
+
+
+        ```JavaScript
+
+        reducer(state, action) {
+
+        // 对 state 进行操作
+          return newState;
+        }
+
+        ```
+
+        reducer 根据 action 的指示，对 state 进行对应的操作，然后返回操作后的 state，Redux Store
+        会自动保存这份新的 state。
+
+
+
+        ::: warning
+
+        **注意**
+
+
+        Redux 官方社区对 reducer 的约定是一个纯函数，即我们不能直接修改 `state` ，而是可以使用 `{...}`
+        等对象结构手段返回一个被修改后的新 `state`。
+
+
+        比如我们对 `state = { a: 1, b: 2 }`  进行修改，将 `a` 替换成 3，我们应该这么做：`newState = {
+        ...state, a: 3 }`，而不应该 `state.a = 3`。 
+
+        :::
+      post: |-
+        我们再来回顾一下之前我们提到的一张图：
+
+        ![](tuture-assets/image-d20b2868cd1a82fe.png)
+
+        我们在这张图上加了点东西，分别标出了 `dispatch` 、 `reducers` 和 `connect` 所完成的工作。
+
+        - `dispatch(action)` 用来在 React 组件中发出修改 Store 中保存状态的指令。
+        - `reducer(state, action)` 用来根据这一指令修改 Store 中保存状态对应的部分。
+        - `connect(mapStateToProps)` 用来将更新好的数据传给组件，然后触发 React 重新渲染，显示最新的状态。
 github: 'https://github.com/pftom/redux-quickstart-tutorial'
