@@ -16,7 +16,7 @@ categories:
   - ''
 id: 4ada16faecf470bf265f52276bdc9170
 created: '2019-11-28T12:13:49.486Z'
-updated: 2019-11-30T09:17:23.618Z
+updated: 2019-11-30T12:57:29.892Z
 steps:
   - name: 在我们阅读教程之前
     commit: f706830
@@ -524,6 +524,204 @@ steps:
         ::: warning
 
         Action 替换成锚点
+
+        :::
+  - name: 'Action: 改变 State 的唯一手段'
+    commit: 9a5f039
+    diff:
+      - file: src/actions/index.js
+        display: true
+        explain:
+          pre: >-
+            ### Action 是什么？
+
+
+            在 Redux 的概念术语中，更新 Store 的状态有且仅有一种方式：那就是调用 `dispatch` 函数，传递一个
+            `action` 给这个函数 。
+
+
+            一个 Action 就是一个简单的 JavaScript 对象：
+
+
+            ```JavaScript
+
+            { type: 'ADD_TODO', text: '我是一只小小小图雀' }
+
+            ```
+
+
+            我们可以看到一个 `action` 包含动作的类型，以及更新状态需要的数据，其中 `type`
+            是必须的，其它内容都是可选的，这里我们除了 `type`，还额外添加了一个 `text` ，代表我们发起 `type` 为
+            `ADD_TODO` 的动作是，额外传递了一个 `text` 内容。
+
+
+            所以如果我们需要更新 Store 状态，那么就需要类似下面的函数调用：
+
+
+            ```JavaScript
+
+            dispatch({ type: 'ADD_TODO', text: '我是一只小小小图雀' })
+
+            ```
+
+
+            ### 使用 Action Creators
+
+
+            因为我们在创建 Action 的时候，有时候有些内容是固定了，比如我们的待办事项添加教程的 Action，有三个字段，分别是
+            `type`，`text`，`id`，我们可能会要在多个地方可以 `dispatch` 这个
+            Action，那么我们每次都需要写下面长长的一串 ：
+
+
+            ```JavaScript
+
+            { type: 'ADD_TODO', text: '我是一只小小小图雀' , id: 0}
+
+            { type: 'ADD_TODO', text: '小若燕雀，亦可一展宏图' , id: 1}
+
+            ...
+
+            { type: 'ADD_TODO', text: '欢迎你加入图雀社区！' , id: 10}
+
+            ```
+
+
+            对 JavaScript 函数比较熟悉的同学可能就知道该如何解决这种问题。是的，我们只需要定义一个函数，然后传入需要变化的参数就可以了。
+
+
+            ```JavaScript
+
+            let nextTodoId = 0;
+
+
+            const addTodo = text => ({
+              type: "ADD_TODO",
+              id: nextTodoId++,
+              text
+            });
+
+            ```
+
+            这种接收一些需要修改的参数，返回一个 Action 的函数在 Redux 中被称为 Action Creators（动作创建器）。
+
+
+            当我们使用 Action Creators 来创建 Action 之后，我们再想要修改 Store 的状态就变成了下面这样：
+
+
+            ```JavaScript
+
+            dispatch(addTodo( '我是一只小小小图雀'))
+
+            ```
+
+
+            可以看到，我们的逻辑大大简化了，每次发起一个新的 `"ADD_TODO"` action，都只需要传入对应的 text。
+
+
+            ### 与 React 整合
+
+
+            了解了 Action 的基础概念之后，我们马上来尝试一下如何在 React 中发起更新动作。
+
+
+            首先，我们在 `src` 文件夹下面创建 `actions` 文件夹，然后在 `actions` 文件夹下创建 `index.js`
+            文件，并在里面添加下面的 Action Creators：
+          post: >-
+            因为在使用 Redux 的 React 应用中，我们将需要创建大量的 Action 或者 Action Creators，所以
+            Redux 社区的最佳实践推荐我们创建一个独立的 `actions`文件夹，并在这个文件夹里面编写特定的 Action 逻辑。
+
+
+            可以看到，我们加入了一个 `addTodo`  Action Creator，它接收 `text` 参数，并每次自增一个
+            `id`，然后返回带有 `id` 和 `text` ，并且类型为 `"ADD_TODO"` 的 Action。
+      - file: src/components/AddTodo.js
+        display: true
+        explain:
+          pre: >-
+            接着我们修改 `src/components/AddTodo.js` 文件，将之前的 `onSubmit` 替换成以
+            `dispatch(action)` 的形式来修改 Store 的状态：
+          post: >+
+            可以看到，上面的代码做了这几件事情：
+
+
+            - 首先我们从 `react-redux` 中导出了 `connect` 函数，它负责将 Store
+            中的状态注入组件的同时，还给组件传递了一个额外的方法：`dispatch`，这样我们就可以在组件的 `props`
+            中获取这个方法。注意到我们在 AddTodo 函数式组件中使用了对象结构来获取 `dispatch` 方法。
+
+            - 导出了我们刚刚创建的 `addTodo` Action Creators。
+
+            - 之后我们使用使用 `addTodo` 接收 `input.value` 输入值，创建一个类型为 `"ADD_TODO"` 的
+            Action，并使用 `dispatch` 函数将这个 Action 发送给 Redux，请求更新 Store 的内容，更新 Store
+            的状态需要 Reducers 来进行操作，我们将在 Reducer 中详细讲解它。
+
+
+
+            ::: warning
+
+            将 Reducer 换成锚点。
+
+            :::
+
+      - file: src/components/App.js
+        display: true
+        explain:
+          pre: >-
+            因为我们已经将直接修改 `this.state` 的 `onSubmit` 换成了 `dispatch` 一个
+            Action，所以我们删除 `src/components/App.js` 相应的代码，因为我们现在已经不需要它们了：
+          post: |-
+            可以看到我们删除了 `nextTodoId` ，因为我们已经在 `src/actions/index.js` 中重新定义了它。
+
+            接着我们删除了 `onSubmit` 方法。
+
+            最后我们删除了传递给 `AddTodo` 组件的 `obSubmit` 方法。
+
+            保存修改的内容，我们在待办事项小应用的输入框里面输入点内容，然后点击 `Add Todo`  按钮，我们发现，之前的错误没有再次出现。
+    explain:
+      pre: >-
+        欢迎来到 Redux Action 环节，让我们再一次引用上一节提到的图：
+
+
+        ![](tuture-assets/image-b60dccc2228876a7.png)
+
+
+        在上一节中，我们就在组件 B 中完成某种动作来修改组件 C 中的内容，详细剖析了完全基于 React 实现的弊端，并通过引出 Redux
+        Store 的概念，讲解了我们只需要建一个全局 JavaScript
+        对象状态树，然后所有的状态的改变都是通过修改这一状态树，进而将修改后的新状态传给相应的组件并触发重新渲染来完成我们的目的。并且我们讲解了如何将
+        Store 里面的状态传给 React 组件使用。
+
+
+        这一节我们就来讲一讲，如何修改 Redux Store 中保存的状态。
+
+
+        让我们再来亲切抛出我们的 Redux 状态环形图：
+
+
+        ![![](tuture-assets/image-72f5a3349d25caed.png)](tuture-assets/image-7220647251df3673.png)
+
+
+        修改 Store 中保存的状态就是上面这张图的第二个部分，即我们已经创建好了 Store，并在里面存储了一颗 JavaScript
+        对象状态树，我们通过 “发起更新动作” 来修改 Store 中保存的状态。
+      post: >
+        ### 留有遗憾的小结
+
+
+        在这一节中，我们完成了 Redux 状态环形图的第二个部分，即发起更新动作，我们首先讲解了什么是 Action 和 Action
+        Creators，然后通过 `dispatch(action)` 的方式来发起一个更新 Store 中状态的动作。
+
+
+        当我们使用了 `dispatch(action)` 之后，传递给子组件，用来修改父组件 State
+        的方法就不需要了，所以我们在代码中删除了它们。在我们的 `AddTodo` 中，这个方法就是 `onSubmit`。
+
+
+        但是有一点遗憾就是，我们虽然删除了 `onSubmit` 方法，但是我们这一节中讲到和实现的 `dispatch(action)`
+        还只能完成之前 `onSubmit` 方法的一半功能，即发起修改动作，但是我们目前还无法修改 Store 中的状态。为了修改 Store 中的
+        State，我们需要定义 Reducers，用户相应我们 `dispatch` 的 Action，并根据 Action 的要求修改 Store
+        中对应的数据。
+
+
+
+        ::: warning
+
+        加入 Reducers 锚点
 
         :::
 github: 'https://github.com/pftom/redux-quickstart-tutorial'
