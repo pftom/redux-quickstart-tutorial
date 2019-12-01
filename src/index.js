@@ -43,6 +43,17 @@ const rootReducer = (state, action) => {
         ]
       };
     }
+
+    case "TOGGLE_TODO": {
+      const { todos } = state;
+
+      return {
+        ...state,
+        todos: todos.map(todo =>
+          todo.id === action.id ? { ...todo, completed: !todo.completed } : todo
+        )
+      };
+    }
     default:
       return state;
   }
