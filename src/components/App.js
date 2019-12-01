@@ -25,18 +25,6 @@ const getVisibleTodos = (todos, filter) => {
 };
 
 class App extends React.Component {
-  constructor(props) {
-    super(props);
-
-    this.setVisibilityFilter = this.setVisibilityFilter.bind(this);
-  }
-
-  setVisibilityFilter(filter) {
-    this.setState({
-      filter: filter
-    });
-  }
-
   render() {
     const { todos, filter } = this.props;
 
@@ -44,10 +32,7 @@ class App extends React.Component {
       <div>
         <AddTodo />
         <TodoList todos={getVisibleTodos(todos, filter)} />
-        <Footer
-          filter={filter}
-          setVisibilityFilter={this.setVisibilityFilter}
-        />
+        <Footer filter={filter} />
       </div>
     );
   }

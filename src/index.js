@@ -54,6 +54,14 @@ const rootReducer = (state, action) => {
         )
       };
     }
+
+    case "SET_VISIBILITY_FILTER": {
+      return {
+        ...state,
+        filter: action.filter
+      };
+    }
+
     default:
       return state;
   }
