@@ -16,7 +16,7 @@ categories:
   - ''
 id: 4ada16faecf470bf265f52276bdc9170
 created: '2019-11-28T12:13:49.486Z'
-updated: 2019-12-01T08:20:45.974Z
+updated: 2019-12-01T09:19:06.569Z
 steps:
   - name: 在我们阅读教程之前
     commit: f706830
@@ -846,4 +846,101 @@ steps:
 
         现在，Redux 的核心概念你已经全部学完了，并且我们的应用已经完全整合了 Redux。但是，我们还有一点工作没有完成，那就是将整个应用完全使用
         Redux 重构。接下来我们将使用我们在上面三节学到的知识，一步一步将我们的待办事项应用的其他部分重构成 Redux 。
+  - name: '重构代码: 将 TodoList 部分迁移到 Redux'
+    commit: c2259e4
+    diff:
+      - file: src/actions/index.js
+        display: true
+        explain:
+          pre: >
+            此时如果你在浏览器里面尝试这个待办事项小应用，你会发现它还只可以添加新的待办事项，对于 “完成和重做待办事项”，以及
+            “过滤查看待办事项” 这两个功能，目前我们还没有使用 Redux
+            实现，所以当你点击单个待办事项时，浏览器会报错；当你点击底部的三个过滤器按钮时，浏览器不会有任何反应。
+
+
+            在这一小节中，我们将使用 Redux 重构 “完成和重做待办事项” 功能，即你可以通过点击某个待办事项来完成它。
+
+
+            我们将运用 Redux 最佳实践的开发方式来重构这一功能：
+
+
+            - 定义 Action Creators
+
+            - 定义 Reducers
+
+            - `connect` 组件
+
+            - 在组件中 `dispatch` Action
+
+
+            你在以后开发 Redux 应用的流程中，都可以使用这四步流程来周而复始的开发新的功能，和改进现有的功能。
+
+
+            ### 定义 Action Creators
+
+
+            首先我们要定义 “完成待办事项” 这一功能所涉及的 Action，打开 `src/actions/index.js`，修改内容内容如下：
+          post: >-
+            可以看到，我们定义并导出了一个 `toggleTodo` 箭头函数，它接收 `id` 并返回一个类型为 `"TOGGLE_TODO"`
+            的 Action。
+      - file: src/index.js
+        display: true
+        explain:
+          pre: >-
+            ### 定义 Redcuers
+
+
+            接着我们来定义响应 `dispatch(action)` 的 Reducers，打开 `src/index.js`，修改
+            `rootReducer` 函数如下：
+          post: >-
+            可以看到，我们在 `switch` 语句里面添加了一个 `"TOGGLE_TODO"` 的判断，并根据 `action.id`
+            来判断对应操作的 todo，取反它目前的 `completed` 属性，用来表示从完成到未完成，或从未完成到完成的操作。
+      - file: src/components/TodoList.js
+        display: true
+        explain:
+          pre: >-
+            ### connect 和 dispatch(action)
+
+
+            当定义了 Action，申明了响应 Action 的 Reducers 之后，我们开始定义 React 和 Redux
+            交流的接口：`connect` 和 `dispatch`，前者负责将 Redux Store 的内容整合进 React，后者负责从
+            React 从发出操作 Redux Store 的指令。
+
+
+            我们打开 `src/components/TodoList.js` 文件，对文件内容作出如下的修改：
+          post: >-
+            可以看到，我们对文件做出了以下几步修改：
+
+
+            - 首先从 `react-redux` 中导出 `connect` 函数，它负责给 `TodoList` 传入 `dispatch`
+            函数，使得我们可以在 `TodoList` 组件中 `dispatch` Action。
+
+            - 然后我们导出了 `toggleTodo` Action Creators，并将之前从父组件接收 `toggleTodo`
+            方法并调用的方式改成了当 Todo 被点击之后，我们 `dispatch(toggle(todo.id))` 。
+
+            - 我们删除 `propsTypes` 中不再需要的 `toggleTodo`。
+      - file: src/components/App.js
+        display: true
+        explain:
+          pre: >-
+            ### 删除无用代码
+
+
+            当我们通过以上三步整合了 Redux 的内容之后，我们就可以删除原 `App.js` 中不必要的代码了，打开
+            `src/components/App.js` 修改内容如下：
+          post: >-
+            可以看到，我们删除了 `toggleTodo` 方法，并对应删除了定义在 `constructor` 中的 `toggleTodo`
+            定义以及在 `render` 方法中，传给 `TodoList` 的 `toggleTodo` 属性。
+    explain:
+      pre: >-
+        在之前的几个小节中，我们已经把 Redux
+        的核心概念讲完了，并且运用这些概念重构了一部分待办事项应用，在这一小节中，我们将完整的运用之前学到的知识，继续重构我们的应用到 Redux。
+      post: |-
+        保存上述修改的代码，打开浏览器，你应该又可以继续点击单个待办事项来完成和重做它了：
+
+        ![](tuture-assets/image-361f3f041debcfd3.png)
+
+        ### 小结
+
+        在本节中，我们介绍了开发 Redux 应用的最佳实践，并通过重构 "完成和重做待办事项“ 这一功能来详细实践了这一最佳实践。
 github: 'https://github.com/pftom/redux-quickstart-tutorial'
