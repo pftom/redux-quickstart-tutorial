@@ -16,7 +16,7 @@ categories:
   - ''
 id: 4ada16faecf470bf265f52276bdc9170
 created: '2019-11-28T12:13:49.486Z'
-updated: 2019-12-01T09:19:06.569Z
+updated: 2019-12-01T11:42:28.469Z
 steps:
   - name: 在我们阅读教程之前
     commit: f706830
@@ -868,9 +868,7 @@ steps:
 
             - 定义 Reducers
 
-            - `connect` 组件
-
-            - 在组件中 `dispatch` Action
+            - `connect` 组件以及在组件中 `dispatch` Action
 
 
             你在以后开发 Redux 应用的流程中，都可以使用这四步流程来周而复始的开发新的功能，和改进现有的功能。
@@ -943,4 +941,86 @@ steps:
         ### 小结
 
         在本节中，我们介绍了开发 Redux 应用的最佳实践，并通过重构 "完成和重做待办事项“ 这一功能来详细实践了这一最佳实践。
+  - name: '重构代码:将 Footer 部分迁移到 Redux'
+    commit: b7f4930
+    diff:
+      - file: src/actions/index.js
+        display: true
+        explain:
+          pre: |-
+            ### 定义 Action Creators
+
+            打开 `src/actions/index.js` 文件，修改内容如下：
+          post: >-
+            可以看到我们创建了一个名为 `setVisibilityFilter` 的 Action Creators，它接收 `filter` 
+            参数，然后返回一个类型为 `"SET_VISIBILITY_FILTER"` 的 Action。
+      - file: src/index.js
+        display: true
+        explain:
+          pre: |-
+            ### 定义 Reducers
+
+            打开 `src/index.js` 文件，修改代码如下：
+          post: >-
+            可以看到，我们增加了一条 `case `  语句，来响应 `"SET_VISIBILITY_FILTER"` Action，通过接收新的
+            `filter` 来更新 Store 的 state。
+      - file: src/components/Footer.js
+        display: true
+        explain:
+          pre: |-
+            ### connect 和 dispatch(action)
+
+            打开 `src/components/Footer.js` 文件，修改内容如下：
+          post: >-
+            可以看到，上面的文件主要做了这几件事：
+
+
+            - 首先从 `react-redux` 中导出 `connect` 函数，它负责给 `Footer` 传入 `dispatch`
+            函数，使得我们可以在 `Footer` 组件中 `dispatch` Action。
+
+            - 然后我们导出了 `setVisibilityFilter ` Action Creators，并将之前从父组件接收
+            `setVisibilityFilter ` 方法并调用的方式改成了当 Link 被点击之后，我们 `dispatch` 对应的
+            Action 。
+      - file: src/components/App.js
+        display: true
+        explain:
+          pre: >-
+            ### 删除无用代码
+
+
+            当我们通过以上三步整合了 Redux 的内容之后，我们就可以删除原 `App.js` 中不必要的代码了，打开
+            `src/components/App.js` 修改内容如下：
+          post: >-
+            可以看到，我们删除了 `setVisibilityFilter ` 方法，并对应删除了定义在 `constructor` 中的
+            `setVisibilityFilter ` 定义以及在 `render` 方法中，传给 `Footer` 的
+            `setVisibilityFilter ` 属性。
+
+
+            因为 `constructor` 方法中已经不需要再定义内容了，所以我们删掉了它。
+    explain:
+      pre: |-
+        这一节中，我们将继续重构剩下的部分。我们将继续遵循上一节提到的 Redux 开发的最佳实践：
+
+        - 定义 Action Creators
+        - 定义 Reducers
+        - `connect` 组件以及在组件中 `dispatch` Action
+      post: >-
+        保存上述修改的代码，打开浏览器，你应该又可以继续点击底部的按钮来过滤完成和未完成的待办事项了：
+
+
+        ![](tuture-assets/image-e85e7002d27537ae.png)
+
+
+        ### 小结
+
+
+        在本节中，我们介绍了开发 Redux 应用的最佳实践，并通过重构 "过滤查看待办事项“ 这一功能来详细实践了这一最佳实践。
+
+
+        自此，我们已经使用 Redux
+        重构了整个待办事项小应用，但是重构完的这份代码还显得有点乱，不同类型的组件状态混在一起，当我们的应用逐渐变得复杂时，我们的
+        `rootReducer` 就会变得非常冗长，所以是时候考虑拆分不同组件的状态了。
+
+
+        我们将在下一节中讲解如何将不同组件的状态进行拆分，以确保我们可以编写大型应用也可以显得很从容。
 github: 'https://github.com/pftom/redux-quickstart-tutorial'
