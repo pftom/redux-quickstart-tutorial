@@ -1,5 +1,5 @@
 import React from "react";
-import AddTodo from "./AddTodo";
+import AddTodoContainer from "../containers/AddTodoContainer";
 import VisibleTodoList from "../containers/VisibleTodoList";
 import Footer from "./Footer";
 
@@ -7,7 +7,7 @@ class App extends React.Component {
   render() {
     return (
       <div>
-        <AddTodo />
+        <AddTodoContainer />
         <VisibleTodoList />
         <Footer />
       </div>
