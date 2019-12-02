@@ -16,7 +16,7 @@ categories:
   - ''
 id: 4ada16faecf470bf265f52276bdc9170
 created: '2019-11-28T12:13:49.486Z'
-updated: 2019-12-01T11:42:28.469Z
+updated: 2019-12-02T01:31:58.397Z
 steps:
   - name: 在我们阅读教程之前
     commit: f706830
@@ -1023,4 +1023,263 @@ steps:
 
 
         我们将在下一节中讲解如何将不同组件的状态进行拆分，以确保我们可以编写大型应用也可以显得很从容。
+  - name: 'combineReducers: 组合拆分状态的 Reducers'
+    commit: d129c56
+    diff:
+      - file: src/reducers/todos.js
+        display: true
+        explain:
+          pre: >-
+            ### 编写Reducer：todos
+
+
+            在 Redux 最佳实践中，因为 Reducer 对应修改 State 中的相关部分，当 State 对象树很大时，我们的
+            Reducer 也会有很多，所以我们一般会单独建一个 `reducers` 文件夹来存放这些 "reducers“。
+
+
+            我们在 `src` 目录下新建 `reducers` 文件夹，然后在里面新建一个 `todos.js` 文件，表示处理 State
+            中对应 `todos` 属性的 Reducer：
+          post: >
+            可以看到，上面的代码做了这几件事：
+
+
+            - 首先我们将原 `initialState` 里面的 `todos` 部分拆分到了 `src/reducers/todos.js`
+            文件里，我们定义了一个 `initialTodoState` 代表之前的 `initialState` 的 `todos`
+            部分，它是一个数组，并把它赋值给 `todos` 函数中 `state` 参数的默认值，即当调用此函时，如果传进来的 state 参数为
+            `undefined` 或者 `null` 时，这个 `state` 就是 `initialState`。
+
+            - 接着我们定义了一个 `todos` 箭头函数，它的结构和 `rootReducer` 类似，都是接收两个参数：`state` 和
+            `action`，然后进入一个 `switch` 判断语句，根据 `action.type` 判断要相应的 Action 类型，然后对
+            `state` 执行对应的操作。
+
+
+
+            ::: warning
+
+            **注意**
+
+
+            我们的 `todos` reducers 只负责处理原 `initialState` 的 `todos` 部分，所以这里它的
+            `state` 就是原 `todos` 属性，它是一个数组，所以我们在 `switch`
+            语句里，进行数据改变时，要对数组进行操作，并最后返回一个新的数组。
+
+            :::
+      - file: src/reducers/filter.js
+        display: true
+        explain:
+          pre: >-
+            ### 编写 Reducer：filter
+
+
+            我们前面使用 `todos` reducer 解决了原 `initialState` 的 `todos`
+            属性操作问题，现在我们马上来讲解剩下的 `filter` 属性的操作问题。
+
+
+            在 `src/reducers` 文件夹下创建 `filter.js` 文件，在其中加入如下的内容：
+          post: >
+            可以看到我们定义了一个 `filter` 箭头函数，它接收两个参数：`state` 和 `action`，因为这个 `filter`
+            reducer 只负责处理原 `initialState` 的 `filter` 属性部分，所以这里这个 `state` 参数就是原
+            `filter`  属性，这里我们给了它一个默认值。
+
+
+
+            ::: warning
+
+            **注意**
+
+
+            filter 函数的剩余部分和 `rootReducer` 类似，但是注意这里它的 `state` 是对 `filter`
+            属性进行操作，所以当判断 `"SET_VISIBILITY_FILTER"` action 类型时，它只是单纯的返回
+            `action.filter`。
+
+            :::
+      - file: src/reducers/index.js
+        display: true
+        explain:
+          pre: >-
+            ### 组合多个 Reducer
+
+
+            当我们将 `rootReducer` 的逻辑拆分，并对应处理 Store 中保存的 State 中的属性之后，我们可以确保每个
+            reducer 都很小，这个时候我们就要考虑如何将这些小的 reducer 组合起来，构成最终的
+            rootReducer，这种组合就像我们组合 React 组件一样，最终只有一个根级组件，在我们的待办事项小应用里面，这个组件就是
+            `App.js` 组件。
+
+
+            Redux 为我们提供了 `combineReducers` API，用来组合多个小的 reducer，我们在
+            `src/reducers` 文件夹下创建 `index.js` 文件，并在里面添加如下内容： 
+          post: >+
+            可以看到，我们从 `redux` 模块中导出了 `combineReducers` 函数，然后导出了之前定义的 `todos` 和
+            `filter` reducer。
+
+
+            接着我们通过对象简洁表示法，将 `todos` 和 `filter` 作为对象属性合在一起，然后传递给
+            `combineReducers` 函数，这里 `combineReducers` 内部就会对 `todos` 和 `filter`
+            进行操作，然后生成类似我们之前的 `rootReducer` 形式。最后我们导出生成的 ”rootReducer`。
+
+
+
+            ::: info
+
+            **combineReducers** 主要有两个作用：
+
+
+            1）组合所有 reducer 的 state，最后组合成类似我们之前定义的 `initialState` 对象状态树。
+
+
+            即这里 `todos` reducer 的 state 为：
+
+
+            ```JavaScript
+
+
+            state = [
+              {
+                id: 1,
+                text: "你好, 图雀",
+                completed: false
+              },
+              {
+                id: 2,
+                text: "我是一只小小小小图雀",
+                completed: false
+              },
+              {
+                id: 3,
+                text: "小若燕雀，亦可一展宏图！",
+                completed: false
+              }
+            ];
+
+            ```
+
+            `filter` reducer 的 state 为：
+
+
+            ```JavaScript
+
+            state = VisibilityFilters.SHOW_ALL
+
+            ```
+
+            那么通过 `combineReducers` 组合这两个 `reducer` 的 `state` 得到的最终结果为：
+
+
+            ```JavaScript
+
+            state = {
+              todos: [
+                {
+                  id: 1,
+                  text: "你好, 图雀",
+                  completed: false
+                },
+                {
+                  id: 2,
+                  text: "我是一只小小小小图雀",
+                  completed: false
+                },
+                {
+                  id: 3,
+                  text: "小若燕雀，亦可一展宏图！",
+                  completed: false
+                }
+              ],
+              filter: VisibilityFilters.SHOW_ALL
+            };
+
+            ```
+
+
+            这个通过 `combineReducers` 组合后的最终 `state` 就是存储在 Store 里面的那颗 State
+            JavaScript 对象状态树。
+
+
+
+            2）分发 `dispatch` 的 Action。
+
+
+            通过 `combineReducers` 组合 `todos` 和 `filter` reducer 之后，从 React 组件中
+            `dispatch` Action会遍历检查 `todos` 和 `filter`  reducer，判断是否存在响应对应
+            `action.type` 的 `case` 语句，如果存在，所有的这些 `case` 语句都会响应都会响应。
+
+            :::
+
+
+      - file: src/index.js
+        display: true
+        explain:
+          pre: >-
+            ### 删除不必要的代码
+
+
+            当我们将原 rootReducer 拆分成了 `todos` 和 `filter` 两个 reducer ，并通过 `redux`
+            提供的 `combineReducers` API 组合这两个 reducer 之后，我们之前在 `src/index.js` 定义的
+            `initialState` 和 `rootReducer` 就不再需要了，所以我们马上来删除它们：
+          post: >-
+            可以看到，我们从删除了之前在 `src/index.js` 定义的 `rootReducer`，转而使用了从
+            `src/reducers/index.js` 导出的 `rootReducer`。
+
+
+            并且我们我们之前讲到，`combineReducers` 的第一个功能就是组合多个 reducer 的 state，最终合并成一个大的
+            JavaScript 对象状态树，然后自动存储在 Redux Store 里面，所以我们不再需要给 `createStore`
+            显式的传递第二个 `initialState` 参数了。
+
+
+            保存修改的内容，打开浏览器，可以照样可以操作所有的功能，你可以加点待办事项，点击某个待办事项以完成它，通过底部的三个过滤按钮查看不同状态下的待办事项：
+
+
+            ![](tuture-assets/image-6b14ae99ca2b2b65.png)
+    explain:
+      pre: >-
+        当应用逻辑逐渐复杂的时候，我们就要考虑将巨大的 Reducer 函数拆分成一个个独立的单元，这在算法中被称为 ”分而治之“。
+
+
+        Reducers 在 Redux 中实际上是用来处理 Store 中存储的 State 中的某个部分，一个 Reducer 和 State
+        对象树中的某个属性一一对应，一个 Reducer 负责处理 State 中对应的那个属性。比如我们来看一下现在我们的 State 的结构：
+
+
+        ```JavaScript
+
+        const initialState = {
+          todos: [
+            {
+              id: 1,
+              text: "你好, 图雀",
+              completed: false
+            },
+            {
+              id: 2,
+              text: "我是一只小小小小图雀",
+              completed: false
+            },
+            {
+              id: 3,
+              text: "小若燕雀，亦可一展宏图！",
+              completed: false
+            }
+          ],
+          filter: VisibilityFilters.SHOW_ALL
+        };
+
+        ```
+
+
+        因为 Reducer 对应着 State 相关的部分，这里我们的 State 有两个部分：`todos` 和
+        `filter`，所以我们可以编写两个对应的 Reducer。
+      post: >-
+        ### 小结
+
+
+        在这一小节中，我们讲解了 `redux` 提供的 `combineReducers` API，它主要解决两个问题：
+
+
+        - 当应用逐渐复杂的时候，我们需要对 Reducer 进行拆分，那么我们就需要把拆分后的 Reducer 进行组合，并合并所有的 State。
+
+        - 我们需要分发从 React 组件中 `dispatch` 出来的 Action 给每一个 Reducer。
+
+
+        当有了 `combineReducers`
+        之后，不管我们的应用如何复杂，我们都可以将处理应用状态的逻辑拆分都一个一个很简洁、易懂的小文件，然后组合这些小文件来完成复杂的应用逻辑，这和
+        React 组件的组合思想类似，可以想见，组件式编程的威力是多么巨大！
 github: 'https://github.com/pftom/redux-quickstart-tutorial'
