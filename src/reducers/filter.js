@@ -1,4 +1,4 @@
-import { VisibilityFilters } from "../components/App";
+import { VisibilityFilters } from "../actions";
 
 const filter = (state = VisibilityFilters.SHOW_ALL, action) => {
   switch (action.type) {

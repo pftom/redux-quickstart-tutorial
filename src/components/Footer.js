@@ -1,6 +1,6 @@
 import React from "react";
 import Link from "./Link";
-import { VisibilityFilters } from "./App";
+import { VisibilityFilters } from "../actions";
 
 import { connect } from "react-redux";
 import { setVisibilityFilter } from "../actions";
