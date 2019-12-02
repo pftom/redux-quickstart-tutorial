@@ -16,7 +16,7 @@ categories:
   - ''
 id: 4ada16faecf470bf265f52276bdc9170
 created: '2019-11-28T12:13:49.486Z'
-updated: 2019-12-02T08:06:57.733Z
+updated: 2019-12-02T08:54:46.461Z
 steps:
   - name: 在我们阅读教程之前
     commit: f706830
@@ -1454,4 +1454,78 @@ steps:
         保存修改的内容，你会发现我们的待办事项小应用依然可以完整的运行，但是我们已经成功的将原来的 `TodoList` 分离成了 Container
         Component 的 `VisibleTodoList `以及 Presentational Component 的 `TodoList
         `了。
+  - name: '重构代码: 将 Footer 的状态和渲染分离'
+    commit: 052e81b
+    diff:
+      - file: src/containers/FilterLink.js
+        display: true
+        explain:
+          pre: |-
+            ### 编写 Container Component
+
+            我们在 `src/containers` 文件夹下创建一个 `FilterLink.js` 文件，添加对应的内容如下：
+          post: >-
+            可以看到我们做了以下几件工作：
+
+
+            - 定义 `mapStateToProps`，它负责比较 Redux Store 中保存的 State 的 `state.filter`
+            属性和组件接收父级传下来的 `ownProps.filter` 属性是否相同，如果相同，则把 `active` 设置为 `true`。
+
+            - 定义 `mapDispatchToProps`，它通过返回一个 `onClick` 函数，当组件点击时，调用生成一个
+            `dispatch` Action，将此时组件接收父级传下来的 `ownProps.filter` 参数传进
+            `setVisibilityFilter` ，生成 `action.type` 为 `"SET_VISIBILITY_FILTER"`
+            的 Action，并 `dispatch` 这个 Action。
+
+            - 最后我们通过 `connect` 组合这两者，将对应的属性合并进 `Link` 组件并导出。我们现在应该可以在 `Link`
+            组件中取到我们在上面两个函数中定义的 `active` 和 `onClick` 属性了。
+      - file: src/components/Footer.js
+        display: true
+        explain:
+          pre: >-
+            ### 编写 Presentational Component
+
+
+            接着我们来编写原 Footer 的 Presentational Component 部分，打开
+            `src/components/Footer.js` 文件，对相应的内容作出如下的修改：
+          post: >-
+            可以看到上面的代码修改做了这么几件工作：
+
+
+            - 我们将之前的导出 `Link` 换成了 `FilterLink` 。请注意当组件的状态和渲染分离之后，我们将使用 Container
+            Component 作为导出给其他组件使用的组件。
+
+            - 我们使用 FilterLink 组件，并传递对应的三个 `FilterLink` 过滤器类型。
+
+            - 接着我们删除不再不需要的 `connect` 和 `setVisibilityFilter` 导出。
+
+            - 最后删除不再需要的`filter` 和 `dispatch` 属性，因为它们已经在 `FilterLink` 中定义并传给了
+            `Link` 组件了。
+      - file: src/components/App.js
+        display: true
+        explain:
+          pre: >-
+            ### 删除不必要的内容
+
+
+            当我们将 Footer 中的状态和渲染拆分之后，`src/components/App.js` 对应的 Footer
+            相关的内容就不再需要了，我们对文件中对应的内容作出如下修改：
+          post: >-
+            可以看到我们做了如下工作：
+
+
+            - 删除  `App` 组件中对应的 `filter` 属性 和 `mapStateToProps` 函数，因为我们已经在
+            `FilterLink` 中获取了对应的属性，所以我们不再需要直接从 App 组件传给 Footer 组件了。
+
+            - 删除对应的 `connect` 函数。
+
+            - 删除对应 `connect(mapStateToProps)()`，因为 App 不再不需要直接从 Redux Store
+            中获取内容了。
+    explain:
+      pre: 我们趁热打铁，用上一节学到的知识来马上将 Footer 组件的状态和渲染抽离。
+      post: >-
+        ### 小结
+
+
+        保存修改的内容，你会发现我们的待办事项小应用依然可以完整的运行，但是我们已经成功的将原来的 `Footer` 分离成了 Container
+        Component 的 `FilterLink `以及 Presentational Component 的 `Footer `了。
 github: 'https://github.com/pftom/redux-quickstart-tutorial'
