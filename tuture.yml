@@ -16,7 +16,7 @@ categories:
   - ''
 id: 4ada16faecf470bf265f52276bdc9170
 created: '2019-11-28T12:13:49.486Z'
-updated: 2019-12-02T01:31:58.397Z
+updated: 2019-12-02T08:06:57.733Z
 steps:
   - name: 在我们阅读教程之前
     commit: f706830
@@ -1282,4 +1282,176 @@ steps:
         当有了 `combineReducers`
         之后，不管我们的应用如何复杂，我们都可以将处理应用状态的逻辑拆分都一个一个很简洁、易懂的小文件，然后组合这些小文件来完成复杂的应用逻辑，这和
         React 组件的组合思想类似，可以想见，组件式编程的威力是多么巨大！
+  - name: '重构代码:将 TodoList 的状态和渲染分离'
+    commit: 91982ae
+    diff:
+      - file: src/containers/VisibleTodoList.js
+        display: true
+        explain:
+          pre: >-
+            ### 编写 Container Component
+
+
+            其实 Container Component 也是一个 React 组件，它只是将原来从 Store 到 View 的状态和从组件中
+            `dispatch` Action 这两个逻辑从原组件中抽离出来。
+
+
+            Redux 的最佳实践中 Container Component 一般保存在 `containers` 文件夹中，我们在 `src`
+            文件夹下建立一个 `containers`  文件夹，然后在里面新建 `VisibleTodoList.js` 文件，用来表示原
+            `TodoList.js` 的 Container Component ，并在文件中加入如下代码：
+          post: >+
+            可以看到，上面的代码主要做了这几件事情：
+
+
+            - 我们定义了一个 `mapStateToProps` ，这是我们之前详细讲解过，它主要是可以获取到来自 Redux Store 的
+            State 以及组件自身的原 Props，然后组合这两者成新的 Props，然后传给组件，这个函数是 Store
+            到组件的唯一接口。这里我们将之前定义在 `App.js` 中的 `getVisibleTodos` 函数移过来，并根据
+            `state.filter` 过滤条件返回相应需要展示的 `todos`。
+
+            - 接着我们定义了一个没见过的 `mapDispatchToProps` 函数，这个函数接收两个参数：`dispatch` 和
+            `ownProps`，前者我们很熟悉了就是用来发出更新动作的函数，后者就是原组件的
+            Props，它是一个可选参数，这里我们没有声明它。我们主要在这个函数声明式的定义所有需要 `dispatch` 的 Action
+            函数，并将其作为 Props 传给组件。这里我们定义了一个 `toggleTodo` 函数，使得在组件中通过调用
+            `toggleTodo(id)` 就可以 `dispatch(toggleTodo(id))` 。
+
+            - 最后我们通过熟悉的 `connect` 函数接收 `mapStateToProps` 和
+            `mapDispatchToProps`并调用，然后再接收 TodoList 组件并调用，返回最终的导出的 Container
+            Component。
+
+
+
+            ::: warning
+
+            **注意**
+
+
+            `connect` 其实是一个高阶函数，高阶函数就是指可以接收参数调用并返回另外一个函数的函数。
+
+
+            这里 `connect` 通过接收 `mapStateToProps` 和 `mapDispatchToProps`
+            然后调用返回一个新函数，接着这个新函数再接收 TodoList，将 `mapStateToProps` 和
+            `mapDispatchToProps` 返回的对象合并然后注入到 TodoList 组件中，使得 TodoList 组件中可以取到
+            `todos` 和 `toggleTodo` 属性，最后返回注入了 `todos` 和 `toggleTodo` 属性的
+            TodoList 组件。
+
+            :::
+
+
+
+            ::: warning
+
+            **注意**
+
+
+            这里你可能注意到我们从 `src/actions/index.js` 导出了 `VisibilityFilters` ，而不是之前的
+            `App.js`，因为 `VisibilityFilters` 定义了过滤展示 TodoList 的三种操作，它和 Action
+            的含义更相近一点，所以我们将相似的东西放在了一起。
+
+            :::
+
+      - file: src/components/TodoList.js
+        display: true
+        explain:
+          pre: >-
+            ### 编写 Presentational Component
+
+
+            当我们编写了 `TodoList` 的 Container Component 之后，接着我们要考虑就是抽离了 State 和
+            `dispatch` 的关于 TodoList 的 Presentational Component 了。
+
+
+            打开 `src/components/TodoList.js` 对文件做出相应的改动如下：
+          post: >-
+            在上面的代码中，我们删除了 `connect` 和 `toggleTodo` Action，并将 TodoList 接收的
+            `dispatch` 属性删除，转而改成通过 `mapDispatchToProps` 传进来的 `toggleTodo` 函数，并在
+            Todo 被点击时调用 `toggleTodo` 函数。
+
+
+            当然我们的 `toggleTodo` 属性又回来了，所以我们在 `propTypes` 中恢复之前删除的 `toggleTodo`
+            。:)
+
+
+            最后，我们不再需要 `connect()(TodoList)`，因为 `VisibleTodoList.js`  中定义的
+            `TodoList` 的对应 Container Component 会取到 Redux Store 中的 State，然后传给 
+            TodoList。
+
+
+            可以看到，我们的 TodoList
+            不用再考虑状态相关的操作，它只需要专心的做好编写更好界面该做的事情了，我们进一步将状态与渲染分离，让合适的人做它最擅长的事。
+      - file: src/actions/index.js
+        display: true
+        explain:
+          pre: >-
+            ### 一些琐碎的收尾工作
+
+
+            我们之前提到将 `VisibilityFilters` 移动到了
+            `src/actions/index.js`，所以这里我们对其作出如下修改：
+      - file: src/components/App.js
+        display: true
+        explain:
+          pre: >-
+            因为我们将原来的 TodoList 剥离成了 "Container Component" 和 "Presentational
+            Component"，所以我们要将 `App.js` 里面对应的 TodoList 换成我们的 `VisibleTodoList`，由
+            "Container Component" 来提供原 TodoList 对外的接口。
+
+
+            我们打开 `src/components/App.js` 对相应的内容作出如下修改：
+          post: |-
+            可以看到我们做了这么几件事：
+
+            - 将之前的 TodoList 更换成 VisibleTodoList。
+            - 删除 VisibilityFilters，因为它已经被放到了 `src/actions/index.js` 中
+            - 删除 getVisibleTodos，因为它已经被放到了 VisibleTodoList 中。
+            - 删除 `mapStateToProps` 中获取 `todos` 的操作，因为我们已经在 VisibleTodoList 中获取了。
+            - 删除对应在 App 组件中的 `todos`。
+      - file: src/components/Footer.js
+        display: true
+        explain:
+          pre: |-
+            接着我们处理一下因 VisibilityFilters 变动而引起的其他几个文件的导包问题。
+
+            打开 `src/components/Footer.js` 修改导包路径：
+      - file: src/reducers/filter.js
+        display: true
+        explain:
+          pre: 打开 `src/reducers/filter.js` 修改导包路径：
+      - file: src/reducers/todos.js
+        display: true
+        explain:
+          pre: >-
+            因为我们在 `src/actions/index.js` 中的 `nextTodoId` 是从 0 开始自增的，所以之前我们定义的
+            `initialTodoState` 会出现一些问题，比如新添加的 todo 的 id 会与初始的重叠，导致出现问题，所以我们删除
+            `src/reducers/todos.js` 中对应的 `initialTodoState`，然后给 `todos` reducer
+            的 state 赋予一个 `[]` 的默认值。
+    explain:
+      pre: >-
+        ### Presentional &  Container Component
+
+
+        Redux 的出现，通过将 State 从 React 组件剥离，并将其保存在 Store
+        里面，来确保状态来源的可预测性，你可能觉得这样就已经很好了，但是 Redux 的动作还没完，它又进一步提出了 "Presentational
+        Components" 和 "Container Components" 的概念，将纯展示性编写 UI 的 React 组件和状态进一步抽离。
+
+
+        当我们把 Redux 状态循环图中的 View 层进一步拆分时，它看起来是这样的：
+
+
+        ![](tuture-assets/image-c2d59288d86293d9.png)
+
+
+        即我们在最终渲染界面的组件和 Store 中存储的 State 之间又加了一层，我们称这一层为 "Container Component"
+        它专门负责接收来自 Store 的 State，并把组件中想要发起的状态改变组装成 Action，然后通过 `dispatch` 函数发出。
+
+
+        将状态彻底剥离之后剩下的那层称之为 “Presentional Component” ，它专门接收来自 "Container
+        Component"  的数据，然后将其渲染成 UI 界面，并在需要改变状态时，告知 "Container Component" ，让其代为
+        `dispatch` Action。
+      post: >-
+        ### 小结
+
+
+        保存修改的内容，你会发现我们的待办事项小应用依然可以完整的运行，但是我们已经成功的将原来的 `TodoList` 分离成了 Container
+        Component 的 `VisibleTodoList `以及 Presentational Component 的 `TodoList
+        `了。
 github: 'https://github.com/pftom/redux-quickstart-tutorial'
