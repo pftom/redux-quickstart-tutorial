@@ -16,7 +16,7 @@ categories:
   - ''
 id: 4ada16faecf470bf265f52276bdc9170
 created: '2019-11-28T12:13:49.486Z'
-updated: 2019-12-02T08:54:46.461Z
+updated: 2019-12-02T09:20:15.195Z
 steps:
   - name: 在我们阅读教程之前
     commit: f706830
@@ -1107,7 +1107,7 @@ steps:
 
 
             Redux 为我们提供了 `combineReducers` API，用来组合多个小的 reducer，我们在
-            `src/reducers` 文件夹下创建 `index.js` 文件，并在里面添加如下内容： 
+            `src/reducers` 文件夹下创建 `index.js` 文件，并在里面添加如下内容：
           post: >+
             可以看到，我们从 `redux` 模块中导出了 `combineReducers` 函数，然后导出了之前定义的 `todos` 和
             `filter` reducer。
@@ -1528,4 +1528,67 @@ steps:
 
         保存修改的内容，你会发现我们的待办事项小应用依然可以完整的运行，但是我们已经成功的将原来的 `Footer` 分离成了 Container
         Component 的 `FilterLink `以及 Presentational Component 的 `Footer `了。
+  - name: '重构代码: 将 AddTodo 的状态和渲染分离'
+    commit: d65c44e
+    diff:
+      - file: src/containers/AddTodoContainer.js
+        display: true
+        explain:
+          pre: |-
+            ### 编写 Container Component
+
+            我们在 `src/containers` 文件夹中创建 `AddTodoContainer.js` 文件，在其中添加如下内容：
+          post: >-
+            可以看到我们做了几件熟悉的工作：
+
+
+            - 定义 `mapStateToProps`，因为 `AddTodo` 不需要从 Redux Store 中取内容，所以
+            `mapStateToProps` 只是单纯的填充 `connect` 的第一个参数，然后简单的返回组件的原
+            `props`，不起其它作用。
+
+            - 定义 `mapDispatchToProps`，我们定义了一个 `addTodo` 函数，它接收 `text` ，然后
+            `dispatch` 一个 `action.type` 为 `"ADD_TODO"` 的 Action。
+
+            - 最后我们通过 `connect` 组合这两者，将对应的属性合并进 `AddTodo ` 组件并导出。我们现在应该可以在
+            `AddTodo ` 组件中取到我们在上面两个函数中定义的 `addTodo ` 属性了。
+      - file: src/components/AddTodo.js
+        display: true
+        explain:
+          pre: >-
+            ### 编写 Presentational Component
+
+
+            接着我们来编写 AddTodo 的 Presentational Component 部分，打开
+            `src/components/AddTodo.js` 文件，对相应的内容作出如下的修改：
+          post: >-
+            可以看到，上面的代码做了这么几件工作：
+
+
+            - 我们删除了导出的 `connect` 函数，并且去掉了其对 `AddTodo` 的包裹。
+
+            - 我们将 `AddTodo` 接收的属性从 `dispatch` 替换成从 `AddTodoContainer` 传过来的
+            `addTodo` 函数，当表单提交时，它将被调用，`dispatch` 一个 `action.type` 为
+            `"ADD_TODO"`，`text` 为 `input.value` 的 Action。
+      - file: src/components/App.js
+        display: true
+        explain:
+          pre: >-
+            ### 修改对应的内容
+
+
+            因为我们将原 `TodoList` 分离成了 "Container Component" `AddTodoContainer` 和
+            "Presentational Component" `TodoList`，所以我们需要对
+            `src/components/App.js` 做出如下的修改：
+          post: >-
+            可以看到我们使用 `AddTodoContainer` 替换了原来的 `AddTodo` 导出，并在 `render` 方法中渲染
+            `AddTodoContainer` 组件。
+    explain:
+      pre: 让我们来完成最后一点收尾工作，将 `AddTodo` 组件的状态和渲染分离。
+      post: >-
+        ### 小结
+
+
+        保存修改的内容，你会发现我们的待办事项小应用依然可以完整的运行，但是我们已经成功的将原来的 `AddTodo` 分离成了 Container
+        Component 的 `AddTodoContainer `以及 Presentational Component 的 `AddTodo
+        `了。
 github: 'https://github.com/pftom/redux-quickstart-tutorial'
