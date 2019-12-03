@@ -16,8 +16,8 @@ categories:
   - React
   - 进阶
 id: 4ada16faecf470bf265f52276bdc9170
-created: "2019-11-28T12:13:49.486Z"
-updated: 2019-12-02T09:20:42.015Z
+created: '2019-11-28T12:13:49.486Z'
+updated: 2019-12-03T14:37:20.278Z
 splits:
   - name: Redux 快速入门教程（一）
     description: 教程第一部分
@@ -321,7 +321,7 @@ steps:
 
 
         当我们对三个核心概念有一个粗略的认知之后，我们就可以开始 Redux 的学习了。
-  - name: "理解 Store:数据的唯一真相来源"
+  - name: '理解 Store:数据的唯一真相来源'
     commit: daa3220
     diff:
       - file: src/index.js
@@ -544,7 +544,7 @@ steps:
         Action 替换成锚点
 
         :::
-  - name: "Action: 改变 State 的唯一手段"
+  - name: 'Action: 改变 State 的唯一手段'
     commit: 9a5f039
     diff:
       - file: src/actions/index.js
@@ -742,7 +742,7 @@ steps:
         加入 Reducers 锚点
 
         :::
-  - name: "Reducers: 响应 Action 的指令"
+  - name: 'Reducers: 响应 Action 的指令'
     commit: daabb3a
     diff:
       - file: src/index.js
@@ -864,7 +864,7 @@ steps:
 
         现在，Redux 的核心概念你已经全部学完了，并且我们的应用已经完全整合了 Redux。但是，我们还有一点工作没有完成，那就是将整个应用完全使用
         Redux 重构。接下来我们将使用我们在上面三节学到的知识，一步一步将我们的待办事项应用的其他部分重构成 Redux 。
-  - name: "重构代码: 将 TodoList 部分迁移到 Redux"
+  - name: '重构代码: 将 TodoList 部分迁移到 Redux'
     commit: c2259e4
     diff:
       - file: src/actions/index.js
@@ -959,7 +959,7 @@ steps:
         ### 小结
 
         在本节中，我们介绍了开发 Redux 应用的最佳实践，并通过重构 "完成和重做待办事项“ 这一功能来详细实践了这一最佳实践。
-  - name: "重构代码:将 Footer 部分迁移到 Redux"
+  - name: '重构代码:将 Footer 部分迁移到 Redux'
     commit: b7f4930
     diff:
       - file: src/actions/index.js
@@ -1041,7 +1041,7 @@ steps:
 
 
         我们将在下一节中讲解如何将不同组件的状态进行拆分，以确保我们可以编写大型应用也可以显得很从容。
-  - name: "combineReducers: 组合拆分状态的 Reducers"
+  - name: 'combineReducers: 组合拆分状态的 Reducers'
     commit: d129c56
     diff:
       - file: src/reducers/todos.js
@@ -1300,7 +1300,7 @@ steps:
         当有了 `combineReducers`
         之后，不管我们的应用如何复杂，我们都可以将处理应用状态的逻辑拆分都一个一个很简洁、易懂的小文件，然后组合这些小文件来完成复杂的应用逻辑，这和
         React 组件的组合思想类似，可以想见，组件式编程的威力是多么巨大！
-  - name: "重构代码:将 TodoList 的状态和渲染分离"
+  - name: '重构代码:将 TodoList 的状态和渲染分离'
     commit: 91982ae
     diff:
       - file: src/containers/VisibleTodoList.js
@@ -1472,7 +1472,7 @@ steps:
         保存修改的内容，你会发现我们的待办事项小应用依然可以完整的运行，但是我们已经成功的将原来的 `TodoList` 分离成了 Container
         Component 的 `VisibleTodoList `以及 Presentational Component 的 `TodoList
         `了。
-  - name: "重构代码: 将 Footer 的状态和渲染分离"
+  - name: '重构代码: 将 Footer 的状态和渲染分离'
     commit: 052e81b
     diff:
       - file: src/containers/FilterLink.js
@@ -1546,7 +1546,7 @@ steps:
 
         保存修改的内容，你会发现我们的待办事项小应用依然可以完整的运行，但是我们已经成功的将原来的 `Footer` 分离成了 Container
         Component 的 `FilterLink `以及 Presentational Component 的 `Footer `了。
-  - name: "重构代码: 将 AddTodo 的状态和渲染分离"
+  - name: '重构代码: 将 AddTodo 的状态和渲染分离'
     commit: d65c44e
     diff:
       - file: src/containers/AddTodoContainer.js
@@ -1602,11 +1602,65 @@ steps:
             `AddTodoContainer` 组件。
     explain:
       pre: 让我们来完成最后一点收尾工作，将 `AddTodo` 组件的状态和渲染分离。
-      post: >-
+      post: >
         ### 小结
 
 
         保存修改的内容，你会发现我们的待办事项小应用依然可以完整的运行，但是我们已经成功的将原来的 `AddTodo` 分离成了 Container
         Component 的 `AddTodoContainer `以及 Presentational Component 的 `AddTodo
         `了。
-github: "https://github.com/pftom/redux-quickstart-tutorial"
+
+
+        ## 总结
+
+
+        到目前为止，我们就已经学习完了 Redux 的所有基础概念，并且运用这些基础概念将一个纯 React 版的待办事项一步一步重构到了 Redux。
+
+
+        让我们再来祭出 Redux 状态循环图，来回顾一下我们在这篇教程中学到的知识：
+
+
+        ![](tuture-assets/image-5adec5f303bc4a6b.png)
+
+
+        我们在这篇教程中首先提出了 Redux 的三大概念：Store，Action，Reducers：
+
+
+        - Store 用来保存整个应用的状态，这个状态是一个被称之为 State 的 JavaScript 对象。所有应用的状态都是从 Store
+        中获取，所以状态的改变都是改变 Store 中的状态，所以 Store 也有着 “数据的唯一真相来源” 的称号。
+
+        - Action 是 Redux 中用来改变 Store 状态的唯一手段，所有状态的改变都是以类似 `{ type:
+        'ACTION_TYPE', data1, data2 }` 这样的形式声明式的定义一个 Action，然后通过 `dispatch` 这个
+        Action 来发生的。
+
+        - Reducers 是用来相应 Action 发出的改变动作，通过 `switch` 语句匹配 `action.type` ，通过对
+        State 的属性进行增删改查，然后返回一个新 State 的操作。同时它也是一个纯函数，即不会直接修改 `State` 本身。
+
+
+        具体反映到我们重构的待办事项项目里，我们使用 Store 保存的状态来替换之前 React 中的 `this.state`，使用 Action
+        来代替之前 React 发起修改 `this.state` 的动作，通过 `dispatch` Action 来发起修改 Store
+        中状态的操作，使用 Reducers 代替之前 React 中更新状态的 `this.setState` 操作，纯化的更新 Store
+        里面保存的 State。
+
+
+        接着我们趁热打铁，使用之前学到的三大概念，将整个待办事情的剩下部分重构到了 Redux。
+
+
+        但是重构完我们发现，我们现在的 `rootReducer` 函数已经有点臃肿了，它包含了 `todos` 和 `filter`
+        两类不同的状态属性，并且如果我们想要继续扩展这个待办事项应用，那么还会继续添加不同的状态属性，到时候各种状态属性的操作夹杂在一起很容易造成混乱和降低代码的可读性，不利于维护，因为我们提出了
+        `combineReducers` 方法，用于切分 `rootReducer` 到多个分散在不同文件的保存着单一状态属性的
+        Reducer，，然后通过 `combineReducers` 来组合这些拆分的 Reducers。
+
+
+        详细讲解 `combineReducers` 的概念之后，我们接着将之前的不完全重构的 Redux 代码进行了有一次重构，将
+        `rootReducer` 拆分成了 `todos` 和 `filter` 两个 Reducer。
+
+
+        最后我们更进一步，让 React 专注做好它擅长的编写用户界面的事情，让应用的状态和渲染分离，我们提出了 Presentational
+        Component 和 Container Component 的概念，前者是完完全全的
+        React，接收来自后者的数据，然后负责将数据高效正确的渲染；前者负责响应用户的操作，然后交给后者发出具体的指令，可以看到，当我们使用
+        Redux 之后，我们在 React 上盖了一层逻辑，这层逻辑完全负责状态方面的工作，这就是 Redux 的精妙之处啊！
+
+
+        希望看到这里的同学能对 Redux 有个很好的了解，并能灵活的结合 React 和 Redux 的使用，感谢你的阅读！
+github: 'https://github.com/pftom/redux-quickstart-tutorial'
