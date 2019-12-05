@@ -17,7 +17,7 @@ categories:
   - 进阶
 id: 4ada16faecf470bf265f52276bdc9170
 created: '2019-11-28T12:13:49.486Z'
-updated: 2019-12-05T08:34:43.616Z
+updated: 2019-12-05T09:15:21.416Z
 splits:
   - name: Redux 快速入门教程（一）
     description: >-
@@ -177,7 +177,7 @@ steps:
         效果：[最终效果地址](https://codesandbox.io/s/redux-quickstart-tutorial-4968k)。
 
         - 使用 Redux
-        重构后的效果：[最后效果地址](https://codesandbox.io/s/redux-quickstart-tutorial-4968k)。
+        重构后的效果：[最后效果地址](https://codesandbox.io/s/compassionate-shadow-7jruj)。
 
 
         当然图雀社区的每一步骤的 [Diff 代码](https://tuture.co/FAQ/)都会给出对应的 Github
