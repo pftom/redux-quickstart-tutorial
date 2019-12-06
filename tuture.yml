@@ -17,7 +17,7 @@ categories:
   - 进阶
 id: 4ada16faecf470bf265f52276bdc9170
 created: '2019-11-28T12:13:49.486Z'
-updated: 2019-12-06T06:44:03.557Z
+updated: 2019-12-06T06:55:43.837Z
 splits:
   - name: Redux 快速入门教程（一）
     description: >-
@@ -369,7 +369,7 @@ steps:
             - 我们首先进行了导包操作，从 `redux` 中导出了 `createStore`，从 `react-redux` 导出了
             `Provider`，从 `src/components/App.js` 中导出了 `VisibilityFilters` 。
 
-            - 接着我们定义了一个 `initialState` 对象，这将作为我们之后创建 Store 的初始状态数据，也是我们之前提到的那棵
+            - 接着我们定义了一个 `initialState` 对象，这将作为我们之后创建 Store 的初始状态数据，也是我们之前提到的那颗
             JavaScript 对象树的初始值。
 
             - 然后我们定义了一个 `rootReducer` 函数，它是一个箭头函数，接收 `state` 和 `action` 然后返回
@@ -413,7 +413,7 @@ steps:
             - 首先我们从 `react-redux` 绑定库里面导出了 `connect` 函数。
 
             - 然后在文件底部，我们定义了一个 `mapStateToProps` 箭头函数，它接收 `state` 和 `props` ，这个
-            `state`  就是我们那棵 Store 里面保存的 JavaScript 对象状态树，目前就是我们在上一个文件中定义的 
+            `state`  就是我们那颗 Store 里面保存的 JavaScript 对象状态树，目前就是我们在上一个文件中定义的 
             `initialState` 内容；这个 `props` 就是我们熟悉的原 React 组件的 `props`，它对于
             `mapStateToProps` 是一个可选参数。 `mapStateToProps` 函数就是可以同时操作组件的原 `props`
             和 Store 的状态，然后合并成最终的组件 props，（当然这里我们并没有使用原组件 props 内容）并通过 `connect`
@@ -460,7 +460,7 @@ steps:
 
         ::: info
 
-        根据不完全统计：”一个网站能留住一名用户的时间只有8S，如果你在8S内不能吸引住用户，或者出现了网站出现了问题，那么你将彻底的丢失这名用户！”
+        根据不完全统计：”一个网站能留住一名用户的时间只有8S，如果你在8S内不能吸引住用户，或者网站出现了问题，那么你将彻底的丢失这名用户！”
 
         :::
 
@@ -514,14 +514,14 @@ steps:
 
 
         于是备受折磨的前端拓荒者们构想出了伟大的 Store。我们完全不需要让每个组件单独保持状态，直接抽离所有组件的状态，类比 React
-        组件树，构造一个中心化的状态树，这棵状态树与 React 组件树一一对应，相当于对 React 组件树进行了状态化建模：
+        组件树，构造一个中心化的状态树，这颗状态树与 React 组件树一一对应，相当于对 React 组件树进行了状态化建模：
 
 
         ![](tuture-assets/image-2caca42ea90c2b26.png)
 
 
-        可以看到，我们将组件的 state 去掉，取而代之的是一棵状态树，它是一个普通的 JavaScript
-        对象，通过对象的嵌套来类比组件的嵌套组合，这棵由 JavaScript 对象建模的状态树就是 Redux 中的 Store。
+        可以看到，我们将组件的 state 去掉，取而代之的是一颗状态树，它是一个普通的 JavaScript
+        对象，通过对象的嵌套来类比组件的嵌套组合，这颗由 JavaScript 对象建模的状态树就是 Redux 中的 Store。
 
 
         当我们将组件的状态抽离出去之后，我们在使用组件 B 操作组件 C 就变得相当简单且高效。
@@ -538,8 +538,8 @@ steps:
         `handleClick` 函数了，再也不需要把更新后的 `state` 一层一层的传给组件 C，还要耗费性能的影响所有中间的组件了。
 
 
-        有了 Redux Store 之后，所有 React 应用中的状态修改都是对这棵 JavaScript 对象树的修改，所有状态的获取都是从这棵
-        JavaScript 对象树获取，这棵 JavaScript 对象代表的状态树成了整个应用的 “数据的唯一真相来源”。
+        有了 Redux Store 之后，所有 React 应用中的状态修改都是对这颗 JavaScript 对象树的修改，所有状态的获取都是从这颗
+        JavaScript 对象树获取，这颗 JavaScript 对象代表的状态树成了整个应用的 “数据的唯一真相来源”。
       post: >-
         保存改变的内容，如果你的 React 开发服务器打开着，那么你应该可以在浏览器中看到如下内容：
 
@@ -720,7 +720,7 @@ steps:
         ![](tuture-assets/chapter_4_1.jpg)
 
 
-        修改 Store 中保存的状态就是上面这张图的第二个部分，即我们已经创建好了 Store，并在里面存储了一棵 JavaScript
+        修改 Store 中保存的状态就是上面这张图的第二个部分，即我们已经创建好了 Store，并在里面存储了一颗 JavaScript
         对象状态树，我们通过 “发起更新动作” 来修改 Store 中保存的状态。
       post: >
         ### 留有遗憾的小结
@@ -797,7 +797,7 @@ steps:
 
 
         `reducer` 是一个普通的 JavaScript 函数，它接收两个参数：`state` 和 `action`，前者为 Store
-        中存储的那棵 JavaScript 对象状态树，后者即为我们在组件中 `dispatch` 的那个 Action。
+        中存储的那颗 JavaScript 对象状态树，后者即为我们在组件中 `dispatch` 的那个 Action。
 
 
         ```JavaScript
@@ -1205,7 +1205,7 @@ steps:
             ```
 
 
-            这个通过 `combineReducers` 组合后的最终 `state` 就是存储在 Store 里面的那棵 State
+            这个通过 `combineReducers` 组合后的最终 `state` 就是存储在 Store 里面的那颗 State
             JavaScript 对象状态树。
 
 
