@@ -17,7 +17,7 @@ categories:
   - 进阶
 id: 4ada16faecf470bf265f52276bdc9170
 created: '2019-11-28T12:13:49.486Z'
-updated: 2019-12-06T00:59:36.937Z
+updated: 2019-12-06T01:05:20.624Z
 splits:
   - name: Redux 快速入门教程（一）
     description: >-
@@ -1660,4 +1660,13 @@ steps:
 
 
         希望看到这里的同学能对 Redux 有个很好的了解，并能灵活的结合 React 和 Redux 的使用，感谢你的阅读！
+
+
+        ## One More Thing!
+
+
+        还有一点比较有意思的就是，细心的读者可能发现了，我们画的 Redux 状态循环图都是单向的，它有一个明确的箭头指向，这其实也是 Redux
+        的哲学，即 ”单向数据流“，也是 React 社区推崇的设计模式，再加上 Reducer
+        的纯函数约定，这使得我们整个应用的每一次状态更改都是可以被记录下来，并且可以重现出来，或者说状态是可预测的，它可以追根溯源的找到某一次状态的改变时由某一个
+        Action 发起的，所以 Redux 也被冠名为 ”可预测的状态管理容器“。
 github: 'https://github.com/pftom/redux-quickstart-tutorial'
