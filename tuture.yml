@@ -17,7 +17,7 @@ categories:
   - 进阶
 id: 4ada16faecf470bf265f52276bdc9170
 created: '2019-11-28T12:13:49.486Z'
-updated: 2019-12-06T06:55:43.837Z
+updated: 2019-12-12T10:56:11.483Z
 splits:
   - name: Redux 快速入门教程（一）
     description: >-
@@ -95,6 +95,14 @@ steps:
         display: false
     explain:
       pre: >+
+        ::: primary
+
+        此教程属于[React
+        前端工程师学习路线](https://github.com/tuture-dev/react-roadmap)的一部分，点击可查看全部内容。
+
+        :::
+
+
         在这篇教程中，我们将展示给你如何使用 Redux 重构一个 React 版的待办事项小应用，它的最终效果如下：
 
 
@@ -453,6 +461,14 @@ steps:
 
     explain:
       pre: >-
+        ::: primary
+
+        此教程属于[React
+        前端工程师学习路线](https://github.com/tuture-dev/react-roadmap)的一部分，点击可查看全部内容。
+
+        :::
+
+
         我们前面提到了 Store 在 Redux 中的作用是用来保存状态的，相当于我们在前端建立了一个简单的
         ”数据库“，在目前的富状态前端应用中，如果每一次状态的修改，比如我点击一个按钮，都需要与后端通信，那么整个网站应用的体验将糟糕透顶。
 
@@ -945,6 +961,14 @@ steps:
             定义以及在 `render` 方法中，传给 `TodoList` 的 `toggleTodo` 属性。
     explain:
       pre: >-
+        ::: primary
+
+        此教程属于[React
+        前端工程师学习路线](https://github.com/tuture-dev/react-roadmap)的一部分，点击可查看全部内容。
+
+        :::
+
+
         在之前的几个小节中，我们已经把 Redux
         的核心概念讲完了，并且运用这些概念重构了一部分待办事项应用，在这一小节中，我们将完整的运用之前学到的知识，继续重构我们的应用到 Redux。
       post: |-
@@ -1440,6 +1464,14 @@ steps:
             的 state 赋予一个 `[]` 的默认值。
     explain:
       pre: >-
+        ::: primary
+
+        此教程属于[React
+        前端工程师学习路线](https://github.com/tuture-dev/react-roadmap)的一部分，点击可查看全部内容。
+
+        :::
+
+
         ### 展示组件和容器组件
 
 
