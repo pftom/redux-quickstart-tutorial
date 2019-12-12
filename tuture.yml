@@ -17,7 +17,7 @@ categories:
   - 进阶
 id: 4ada16faecf470bf265f52276bdc9170
 created: '2019-11-28T12:13:49.486Z'
-updated: 2019-12-12T10:56:11.483Z
+updated: 2019-12-12T13:22:50.045Z
 splits:
   - name: Redux 快速入门教程（一）
     description: >-
@@ -355,6 +355,13 @@ steps:
 
 
         当我们对三个核心概念有一个粗略的认知之后，我们就可以开始 Redux 的学习了。
+      post: >
+        ::: primary
+
+        此教程属于[React
+        前端工程师学习路线](https://github.com/tuture-dev/react-roadmap)的一部分，点击可查看全部内容。
+
+        :::
   - name: '理解 Store:数据的唯一真相来源'
     commit: daa3220
     diff:
@@ -845,7 +852,7 @@ steps:
         的修改。
 
         :::
-      post: >-
+      post: >
         ### 小结
 
 
@@ -876,6 +883,14 @@ steps:
 
         现在，Redux 的核心概念你已经全部学完了，并且我们的应用已经完全整合了 Redux。但是，我们还有一点工作没有完成，那就是将整个应用完全使用
         Redux 重构。接下来我们将使用我们在上面三节学到的知识，一步一步将我们的待办事项应用的其他部分重构成 Redux 。
+
+
+        ::: primary
+
+        此教程属于[React
+        前端工程师学习路线](https://github.com/tuture-dev/react-roadmap)的一部分，点击可查看全部内容。
+
+        :::
   - name: '重构代码: 将 TodoList 部分迁移到 Redux'
     commit: c2259e4
     diff:
@@ -1305,7 +1320,7 @@ steps:
 
         因为 Reducer 对应着 State 相关的部分，这里我们的 State 有两个部分：`todos` 和
         `filter`，所以我们可以编写两个对应的 Reducer。
-      post: >-
+      post: >
         ### 小结
 
 
@@ -1320,6 +1335,14 @@ steps:
         当有了 `combineReducers`
         之后，不管我们的应用如何复杂，我们都可以将处理应用状态的逻辑拆分都一个一个很简洁、易懂的小文件，然后组合这些小文件来完成复杂的应用逻辑，这和
         React 组件的组合思想类似，可以想见，组件式编程的威力是多么巨大！
+
+
+        ::: primary
+
+        此教程属于[React
+        前端工程师学习路线](https://github.com/tuture-dev/react-roadmap)的一部分，点击可查看全部内容。
+
+        :::
   - name: '重构代码:将 TodoList 的状态和渲染分离'
     commit: 91982ae
     diff:
@@ -1631,7 +1654,7 @@ steps:
             `AddTodoContainer` 组件。
     explain:
       pre: 让我们来完成最后一点收尾工作，将 `AddTodo` 组件的状态和渲染分离。
-      post: >
+      post: >+
         ### 小结
 
 
@@ -1701,4 +1724,13 @@ steps:
         的哲学，即 ”单向数据流“，也是 React 社区推崇的设计模式，再加上 Reducer
         的纯函数约定，这使得我们整个应用的每一次状态更改都是可以被记录下来，并且可以重现出来，或者说状态是可预测的，它可以追根溯源的找到某一次状态的改变时由某一个
         Action 发起的，所以 Redux 也被冠名为 ”可预测的状态管理容器“。
+
+
+        ::: primary
+
+        此教程属于[React
+        前端工程师学习路线](https://github.com/tuture-dev/react-roadmap)的一部分，点击可查看全部内容。
+
+        :::
+
 github: 'https://github.com/pftom/redux-quickstart-tutorial'
