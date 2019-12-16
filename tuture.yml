@@ -16,7 +16,7 @@ categories:
   - 进阶
 id: 4ada16faecf470bf265f52276bdc9170
 created: '2019-11-28T12:13:49.486Z'
-updated: 2019-12-15T12:49:56.245Z
+updated: 2019-12-16T15:28:27.918Z
 splits:
   - name: Redux 快速入门教程（一）
     description: >-
@@ -47,10 +47,7 @@ splits:
     end: d129c56
   - name: Redux 快速入门教程（四）
     description: >-
-      这一部分我们进一步将状态和渲染剥离，提出了 Presentational Component 和 Container Component
-      的概念，Container Component 用户处理 状态相关的内容，Presentational Component 则是 React
-      的领地。当我们进行了这种状态和渲染的剥离之后， 你会发现我们使用 Redux 在 React
-      上面盖了一个状态循环图，把和状态有关的内容全部剥离出来了，React 最终只需要专注做好它擅长的事情：更好更高效的构建用户界面！
+      这一部分我们进一步将状态和渲染剥离，提出了展示组件和容器组件的概念，容器组件用于处理状态相关的内容，展示组件则是 React 的领地。当我们进行了这种状态和渲染的剥离之后，你会发现我们使用 Redux 在 React 上面盖了一个状态循环图，把和状态有关的内容全部剥离出来了，React 最终只需要专注做好它擅长的事情：更好更高效地构建用户界面！
     start: 91982ae
     end: d65c44e
 steps:
@@ -432,10 +429,21 @@ steps:
             - 最后我们删除不再需要的 `constructor` 中的 `this.state` 内容。
 
 
+            ::: warning
+
+            **注意**
+
+
+            `connect` 其实是一个高阶函数，高阶函数就是指可以接收参数调用并返回另外一个函数的函数。这里 `connect` 通过接收
+            `mapStateToProps` 然后调用返回一个新函数，接着这个新函数再接收 `App` 组件作为参数，通过
+            `mapStateToProps` 注入 `todos` 和 `filter` 属性，最后返回注入后的 `App` 组件。
+
+            :::
+
 
             ::: info
 
-            **注意**
+            **提示**
 
 
             这里之所以我们能在 `App` 组件中通过 `mapStateToProps` 拿到 Store 中保存的 JavaScript
@@ -874,16 +882,16 @@ steps:
         前端工程师学习路线](https://github.com/tuture-dev/react-roadmap)的一部分，点击可查看全部内容。
 
         :::
-  - name: '重构代码: 将 TodoList 部分迁移到 Redux'
+  - name: 重构代码：将 TodoList 部分迁移到 Redux
     commit: c2259e4
     diff:
       - file: src/actions/index.js
         display: true
         explain:
           pre: >
-            此时如果你在浏览器里面尝试这个待办事项小应用，你会发现它还只可以添加新的待办事项，对于 “完成和重做待办事项”，以及
+            此时如果你在浏览器里面尝试这个待办事项小应用，你会发现它还只可以添加新的待办事项，对于 “完成和重做待办事项” 以及
             “过滤查看待办事项” 这两个功能，目前我们还没有使用 Redux
-            实现，所以当你点击单个待办事项时，浏览器会报错；当你点击底部的三个过滤器按钮时，浏览器不会有任何反应。
+            实现。所以当你点击单个待办事项时，浏览器会报错；当你点击底部的三个过滤器按钮时，浏览器不会有任何反应。
 
 
             在这一小节中，我们将使用 Redux 重构 “完成和重做待办事项” 功能，即你可以通过点击某个待办事项来完成它。
@@ -899,7 +907,7 @@ steps:
             - `connect` 组件以及在组件中 `dispatch` Action
 
 
-            你在以后开发 Redux 应用的流程中，都可以使用这四步流程来周而复始的开发新的功能，和改进现有的功能。
+            以后在开发 Redux 应用的时候，都可以使用这三步流程来周而复始地开发新的功能，或改进现有的功能。
 
 
             ### 定义 Action Creators
@@ -913,7 +921,7 @@ steps:
         display: true
         explain:
           pre: >-
-            ### 定义 Redcuers
+            ### 定义 Reducers
 
 
             接着我们来定义响应 `dispatch(action)` 的 Reducers，打开 `src/index.js`，修改
@@ -928,7 +936,7 @@ steps:
             ### connect 和 dispatch(action)
 
 
-            当定义了 Action，申明了响应 Action 的 Reducers 之后，我们开始定义 React 和 Redux
+            当定义了 Action，声明了响应 Action 的 Reducers 之后，我们开始定义 React 和 Redux
             交流的接口：`connect` 和 `dispatch`，前者负责将 Redux Store 的内容整合进 React，后者负责从
             React 从发出操作 Redux Store 的指令。
 
@@ -968,16 +976,17 @@ steps:
 
 
         在之前的几个小节中，我们已经把 Redux
-        的核心概念讲完了，并且运用这些概念重构了一部分待办事项应用，在这一小节中，我们将完整的运用之前学到的知识，继续重构我们的应用到 Redux。
+        的核心概念讲完了，并且运用这些概念重构了一部分待办事项应用，在这一小节中，我们将趁热打铁，完整地运用之前学到的知识，继续用 Redux
+        重构我们的应用。
       post: |-
-        保存上述修改的代码，打开浏览器，你应该又可以继续点击单个待办事项来完成和重做它了：
+        保存上述修改的代码，打开浏览器，你应该又可以点击单个待办事项来完成和重做它了：
 
-        ![](tuture-assets/image-361f3f041debcfd3.png)
+        ![](tuture-assets/redux-demo-3.gif)
 
         ### 小结
 
         在本节中，我们介绍了开发 Redux 应用的最佳实践，并通过重构 "完成和重做待办事项“ 这一功能来详细实践了这一最佳实践。
-  - name: '重构代码:将 Footer 部分迁移到 Redux'
+  - name: 重构代码：将 Footer 部分迁移到 Redux
     commit: b7f4930
     diff:
       - file: src/actions/index.js
@@ -998,8 +1007,8 @@ steps:
 
             打开 `src/index.js` 文件，修改代码如下：
           post: >-
-            可以看到，我们增加了一条 `case `  语句，来响应 `"SET_VISIBILITY_FILTER"` Action，通过接收新的
-            `filter` 来更新 Store 的 state。
+            可以看到，我们增加了一条 `case`  语句，来响应 `"SET_VISIBILITY_FILTER"` Action，通过接收新的
+            `filter` 来更新 Store 中的状态。
       - file: src/components/Footer.js
         display: true
         explain:
@@ -1027,9 +1036,9 @@ steps:
             当我们通过以上三步整合了 Redux 的内容之后，我们就可以删除原 `App.js` 中不必要的代码了，打开
             `src/components/App.js` 修改内容如下：
           post: >-
-            可以看到，我们删除了 `setVisibilityFilter ` 方法，并对应删除了定义在 `constructor` 中的
+            可以看到，我们删除了 `setVisibilityFilter` 方法，并对应删除了定义在 `constructor` 中的
             `setVisibilityFilter ` 定义以及在 `render` 方法中，传给 `Footer` 的
-            `setVisibilityFilter ` 属性。
+            `setVisibilityFilter` 属性。
 
 
             因为 `constructor` 方法中已经不需要再定义内容了，所以我们删掉了它。
@@ -1044,7 +1053,7 @@ steps:
         保存上述修改的代码，打开浏览器，你应该又可以继续点击底部的按钮来过滤完成和未完成的待办事项了：
 
 
-        ![](tuture-assets/image-e85e7002d27537ae.png)
+        ![](tuture-assets/redux-demo-32.gif)
 
 
         ### 小结
@@ -1054,19 +1063,19 @@ steps:
 
 
         自此，我们已经使用 Redux
-        重构了整个待办事项小应用，但是重构完的这份代码还显得有点乱，不同类型的组件状态混在一起，当我们的应用逐渐变得复杂时，我们的
+        重构了整个待办事项小应用，但是重构完的这份代码还显得有点乱，不同类型的组件状态混在一起。当我们的应用逐渐变得复杂时，我们的
         `rootReducer` 就会变得非常冗长，所以是时候考虑拆分不同组件的状态了。
 
 
-        我们将在下一节中讲解如何将不同组件的状态进行拆分，以确保我们可以编写大型应用也可以显得很从容。
-  - name: 'combineReducers: 组合拆分状态的 Reducers'
+        我们将在下一节中讲解如何将不同组件的状态进行拆分，以确保我们在编写大型应用时也可以显得很从容。
+  - name: combineReducers：组合拆分状态的 Reducers
     commit: d129c56
     diff:
       - file: src/reducers/todos.js
         display: true
         explain:
           pre: >-
-            ### 编写Reducer：todos
+            ### 编写 Reducer：todos
 
 
             在 Redux 最佳实践中，因为 Reducer 对应修改 State 中的相关部分，当 State 对象树很大时，我们的
@@ -1081,8 +1090,8 @@ steps:
 
             - 首先我们将原 `initialState` 里面的 `todos` 部分拆分到了 `src/reducers/todos.js`
             文件里，我们定义了一个 `initialTodoState` 代表之前的 `initialState` 的 `todos`
-            部分，它是一个数组，并把它赋值给 `todos` 函数中 `state` 参数的默认值，即当调用此函时，如果传进来的 state 参数为
-            `undefined` 或者 `null` 时，这个 `state` 就是 `initialState`。
+            部分，它是一个数组，并把它赋值给 `todos` 函数中 `state` 参数的默认值，即当调用此函数时，如果传进来的 state
+            参数为 `undefined` 或者 `null` 时，这个 `state` 就是 `initialState`。
 
             - 接着我们定义了一个 `todos` 箭头函数，它的结构和 `rootReducer` 类似，都是接收两个参数：`state` 和
             `action`，然后进入一个 `switch` 判断语句，根据 `action.type` 判断要相应的 Action 类型，然后对
@@ -1151,7 +1160,7 @@ steps:
 
             接着我们通过对象简洁表示法，将 `todos` 和 `filter` 作为对象属性合在一起，然后传递给
             `combineReducers` 函数，这里 `combineReducers` 内部就会对 `todos` 和 `filter`
-            进行操作，然后生成类似我们之前的 `rootReducer` 形式。最后我们导出生成的 ”rootReducer`。
+            进行操作，然后生成类似我们之前的 `rootReducer` 形式。最后我们导出生成的 `rootReducer`。
 
 
 
@@ -1167,7 +1176,6 @@ steps:
 
 
             ```JavaScript
-
 
             state = [
               {
@@ -1249,8 +1257,8 @@ steps:
             ### 删除不必要的代码
 
 
-            当我们将原 rootReducer 拆分成了 `todos` 和 `filter` 两个 reducer ，并通过 `redux`
-            提供的 `combineReducers` API 组合这两个 reducer 之后，我们之前在 `src/index.js` 定义的
+            当我们将原 `rootReducer` 拆分成了 `todos` 和 `filter` 两个 reducer ，并通过 `redux`
+            提供的 `combineReducers` API 进行组合后，我们之前在 `src/index.js` 定义的
             `initialState` 和 `rootReducer` 就不再需要了，所以我们马上来删除它们：
           post: >-
             可以看到，我们从删除了之前在 `src/index.js` 定义的 `rootReducer`，转而使用了从
@@ -1265,7 +1273,7 @@ steps:
             保存修改的内容，打开浏览器，可以照样可以操作所有的功能，你可以加点待办事项，点击某个待办事项以完成它，通过底部的三个过滤按钮查看不同状态下的待办事项：
 
 
-            ![](tuture-assets/image-6b14ae99ca2b2b65.png)
+            ![](tuture-assets/redux-demo-33.gif)
     explain:
       pre: >-
         当应用逻辑逐渐复杂的时候，我们就要考虑将巨大的 Reducer 函数拆分成一个个独立的单元，这在算法中被称为 ”分而治之“。
@@ -1312,7 +1320,7 @@ steps:
 
         - 当应用逐渐复杂的时候，我们需要对 Reducer 进行拆分，那么我们就需要把拆分后的 Reducer 进行组合，并合并所有的 State。
 
-        - 我们需要分发从 React 组件中 `dispatch` 出来的 Action 给每一个 Reducer。
+        - 对于每个 React 组件 dispatch 的 Action，将其分发给对应的 Reducer。
 
 
         当有了 `combineReducers`
@@ -1326,23 +1334,30 @@ steps:
         前端工程师学习路线](https://github.com/tuture-dev/react-roadmap)的一部分，点击可查看全部内容。
 
         :::
-  - name: '重构代码:将 TodoList 的状态和渲染分离'
+  - name: 重构代码：将 TodoList 的状态和渲染分离
     commit: 91982ae
     diff:
+      - file: src/actions/index.js
+        display: true
+        explain:
+          pre: >-
+            首先，我们将 App.js 中的 `VisibilityFilters` 移动到了 src/actions/index.js 中。因为
+            `VisibilityFilters` 定义了过滤展示 TodoList 的三种操作，和 Action
+            的含义更相近一点，所以我们将相似的东西放在了一起。修改 src/actions/index.js 如下：
       - file: src/containers/VisibleTodoList.js
         display: true
         explain:
           pre: >-
-            ### 编写 Container Component
+            ### 编写容器组件
 
 
-            其实 Container Component 也是一个 React 组件，它只是将原来从 Store 到 View 的状态和从组件中
-            `dispatch` Action 这两个逻辑从原组件中抽离出来。
+            容器组件其实也是一个 React 组件，它只是将原来从 Store 到 View 的状态和从组件中 `dispatch` Action
+            这两个逻辑从原组件中抽离出来。
 
 
-            Redux 的最佳实践中 Container Component 一般保存在 `containers` 文件夹中，我们在 `src`
-            文件夹下建立一个 `containers`  文件夹，然后在里面新建 `VisibleTodoList.js` 文件，用来表示原
-            `TodoList.js` 的 Container Component ，并在文件中加入如下代码：
+            根据 Redux 的最佳实践，容器组件一般保存在 `containers` 文件夹中，我们在 `src` 文件夹下建立一个
+            `containers`  文件夹，然后在里面新建 `VisibleTodoList.js` 文件，用来表示原
+            `TodoList.js` 的容器组件，并在文件中加入如下代码：
           post: >+
             可以看到，上面的代码主要做了这几件事情：
 
@@ -1359,49 +1374,17 @@ steps:
             `toggleTodo(id)` 就可以 `dispatch(toggleTodo(id))` 。
 
             - 最后我们通过熟悉的 `connect` 函数接收 `mapStateToProps` 和
-            `mapDispatchToProps`并调用，然后再接收 TodoList 组件并调用，返回最终的导出的 Container
-            Component。
-
-
-
-            ::: warning
-
-            **注意**
-
-
-            `connect` 其实是一个高阶函数，高阶函数就是指可以接收参数调用并返回另外一个函数的函数。
-
-
-            这里 `connect` 通过接收 `mapStateToProps` 和 `mapDispatchToProps`
-            然后调用返回一个新函数，接着这个新函数再接收 TodoList，将 `mapStateToProps` 和
-            `mapDispatchToProps` 返回的对象合并然后注入到 TodoList 组件中，使得 TodoList 组件中可以取到
-            `todos` 和 `toggleTodo` 属性，最后返回注入了 `todos` 和 `toggleTodo` 属性的
-            TodoList 组件。
-
-            :::
-
-
-
-            ::: warning
-
-            **注意**
-
-
-            这里你可能注意到我们从 `src/actions/index.js` 导出了 `VisibilityFilters` ，而不是之前的
-            `App.js`，因为 `VisibilityFilters` 定义了过滤展示 TodoList 的三种操作，它和 Action
-            的含义更相近一点，所以我们将相似的东西放在了一起。
-
-            :::
+            `mapDispatchToProps`并调用，然后再接收 TodoList 组件并调用，返回最终的导出的容器组件。
 
       - file: src/components/TodoList.js
         display: true
         explain:
           pre: >-
-            ### 编写 Presentational Component
+            ### 编写展示组件
 
 
-            当我们编写了 `TodoList` 的 Container Component 之后，接着我们要考虑就是抽离了 State 和
-            `dispatch` 的关于 TodoList 的 Presentational Component 了。
+            当我们编写了 `TodoList` 的容器组件之后，接着我们要考虑就是抽离了 State 和 `dispatch` 的关于
+            TodoList 的展示组件了。
 
 
             打开 `src/components/TodoList.js` 对文件做出相应的改动如下：
@@ -1416,28 +1399,20 @@ steps:
 
 
             最后，我们不再需要 `connect()(TodoList)`，因为 `VisibleTodoList.js`  中定义的
-            `TodoList` 的对应 Container Component 会取到 Redux Store 中的 State，然后传给 
-            TodoList。
+            `TodoList` 的对应容器组件会取到 Redux Store 中的 State，然后传给 TodoList。
 
 
-            可以看到，我们的 TodoList
-            不用再考虑状态相关的操作，它只需要专心的做好编写更好界面该做的事情了，我们进一步将状态与渲染分离，让合适的人做它最擅长的事。
-      - file: src/actions/index.js
+            可以看到，TodoList 不用再考虑状态相关的操作，只需要专心地做好界面的展示和动作的响应。我们进一步将状态与渲染分离，让合适的人做
+            ta 最擅长的事。
+      - file: src/components/App.js
         display: true
         explain:
           pre: >-
             ### 一些琐碎的收尾工作
 
 
-            我们之前提到将 `VisibilityFilters` 移动到了
-            `src/actions/index.js`，所以这里我们对其作出如下修改：
-      - file: src/components/App.js
-        display: true
-        explain:
-          pre: >-
-            因为我们将原来的 TodoList 剥离成了 "Container Component" 和 "Presentational
-            Component"，所以我们要将 `App.js` 里面对应的 TodoList 换成我们的 `VisibleTodoList`，由
-            "Container Component" 来提供原 TodoList 对外的接口。
+            因为我们将原来的 TodoList 剥离成了容器组件和 展示组件，所以我们要将 `App.js` 里面对应的 `TodoList`
+            换成我们的 `VisibleTodoList`，由容器组件来提供原 TodoList 对外的接口。
 
 
             我们打开 `src/components/App.js` 对相应的内容作出如下修改：
@@ -1482,9 +1457,9 @@ steps:
 
 
         Redux 的出现，通过将 State 从 React 组件剥离，并将其保存在 Store
-        里面，来确保状态来源的可预测性，你可能觉得这样就已经很好了，但是 Redux 的动作还没完，它又进一步提出了 展示组件
-        （"Presentational Components"） 和容器组件 （"Container Components"） 的概念，将纯展示性编写
-        UI 的 React 组件和状态进一步抽离。
+        里面，来确保状态来源的可预测性，你可能觉得这样就已经很好了，但是 Redux
+        的动作还没完，它又进一步提出了**展示组件**（Presentational Components）和**容器组件**（Container
+        Components）的概念，将纯展示性的 React 组件和状态进一步抽离。
 
 
         当我们把 Redux 状态循环图中的 View 层进一步拆分时，它看起来是这样的：
@@ -1493,28 +1468,26 @@ steps:
         ![](tuture-assets/chapter_9_1-6cb0c383fca08e4d.jpg)
 
 
-        即我们在最终渲染界面的组件和 Store 中存储的 State 之间又加了一层，我们称这一层为 "Container Component"
-        它专门负责接收来自 Store 的 State，并把组件中想要发起的状态改变组装成 Action，然后通过 `dispatch` 函数发出。
+        即我们在最终渲染界面的组件和 Store 中存储的 State 之间又加了一层，我们称这一层为它专门负责接收来自 Store 的
+        State，并把组件中想要发起的状态改变组装成 Action，然后通过 `dispatch` 函数发出。
 
 
-        将状态彻底剥离之后剩下的那层称之为 “Presentional Component” ，它专门接收来自 "Container
-        Component"  的数据，然后将其渲染成 UI 界面，并在需要改变状态时，告知 "Container Component" ，让其代为
-        `dispatch` Action。
+        将状态彻底剥离之后剩下的那层称之为**展示组件**，它专门接收来自**容器组件**的数据，然后将其渲染成 UI
+        界面，并在需要改变状态时，告知容器组件，让其代为 `dispatch` Action。
       post: >-
         ### 小结
 
 
-        保存修改的内容，你会发现我们的待办事项小应用依然可以完整的运行，但是我们已经成功的将原来的 `TodoList` 分离成了 Container
-        Component 的 `VisibleTodoList `以及 Presentational Component 的 `TodoList
-        `了。
-  - name: '重构代码: 将 Footer 的状态和渲染分离'
+        保存修改的内容，你会发现我们的待办事项小应用依然可以完整的运行，但是我们已经成功的将原来的 `TodoList` 分离成了容器组件的
+        `VisibleTodoList `以及展示组件的 `TodoList `了。
+  - name: 重构代码：将 Footer 的状态和渲染分离
     commit: 052e81b
     diff:
       - file: src/containers/FilterLink.js
         display: true
         explain:
           pre: |-
-            ### 编写 Container Component
+            ### 编写容器组件
 
             我们在 `src/containers` 文件夹下创建一个 `FilterLink.js` 文件，添加对应的内容如下：
           post: >-
@@ -1535,19 +1508,19 @@ steps:
         display: true
         explain:
           pre: >-
-            ### 编写 Presentational Component
+            ### 编写容器组件
 
 
-            接着我们来编写原 Footer 的 Presentational Component 部分，打开
-            `src/components/Footer.js` 文件，对相应的内容作出如下的修改：
+            接着我们来编写原 Footer 的容器组件部分，打开 `src/components/Footer.js`
+            文件，对相应的内容作出如下的修改：
           post: >-
             可以看到上面的代码修改做了这么几件工作：
 
 
-            - 我们将之前的导出 `Link` 换成了 `FilterLink` 。请注意当组件的状态和渲染分离之后，我们将使用 Container
-            Component 作为导出给其他组件使用的组件。
+            - 我们将之前的导出 `Link` 换成了 `FilterLink`
+            。请注意当组件的状态和渲染分离之后，我们将使用容器组件为导出给其他组件使用的组件。
 
-            - 我们使用 FilterLink 组件，并传递对应的三个 `FilterLink` 过滤器类型。
+            - 我们使用 `FilterLink` 组件，并传递对应的三个 `FilterLink` 过滤器类型。
 
             - 接着我们删除不再不需要的 `connect` 和 `setVisibilityFilter` 导出。
 
@@ -1566,12 +1539,12 @@ steps:
             可以看到我们做了如下工作：
 
 
-            - 删除  `App` 组件中对应的 `filter` 属性 和 `mapStateToProps` 函数，因为我们已经在
+            - 删除  `App` 组件中对应的 `filter` 属性和 `mapStateToProps` 函数，因为我们已经在
             `FilterLink` 中获取了对应的属性，所以我们不再需要直接从 App 组件传给 Footer 组件了。
 
             - 删除对应的 `connect` 函数。
 
-            - 删除对应 `connect(mapStateToProps)()`，因为 App 不再不需要直接从 Redux Store
+            - 删除对应 `connect(mapStateToProps)()`，因为 App 不再需要直接从 Redux Store
             中获取内容了。
     explain:
       pre: 我们趁热打铁，用上一节学到的知识来马上将 Footer 组件的状态和渲染抽离。
@@ -1579,8 +1552,8 @@ steps:
         ### 小结
 
 
-        保存修改的内容，你会发现我们的待办事项小应用依然可以完整的运行，但是我们已经成功的将原来的 `Footer` 分离成了 Container
-        Component 的 `FilterLink `以及 Presentational Component 的 `Footer `了。
+        保存修改的内容，你会发现我们的待办事项小应用依然可以完整的运行，但是我们已经成功的将原来的 `Footer` 分离成了容器组件的
+        `FilterLink` 以及展示组件的 `Footer` 了。
   - name: '重构代码: 将 AddTodo 的状态和渲染分离'
     commit: d65c44e
     diff:
@@ -1588,7 +1561,7 @@ steps:
         display: true
         explain:
           pre: |-
-            ### 编写 Container Component
+            ### 编写容器组件
 
             我们在 `src/containers` 文件夹中创建 `AddTodoContainer.js` 文件，在其中添加如下内容：
           post: >-
@@ -1596,23 +1569,23 @@ steps:
 
 
             - 定义 `mapStateToProps`，因为 `AddTodo` 不需要从 Redux Store 中取内容，所以
-            `mapStateToProps` 只是单纯的填充 `connect` 的第一个参数，然后简单的返回组件的原
+            `mapStateToProps` 只是单纯地填充 `connect` 的第一个参数，然后简单地返回组件的原
             `props`，不起其它作用。
 
             - 定义 `mapDispatchToProps`，我们定义了一个 `addTodo` 函数，它接收 `text` ，然后
             `dispatch` 一个 `action.type` 为 `"ADD_TODO"` 的 Action。
 
-            - 最后我们通过 `connect` 组合这两者，将对应的属性合并进 `AddTodo ` 组件并导出。我们现在应该可以在
-            `AddTodo ` 组件中取到我们在上面两个函数中定义的 `addTodo ` 属性了。
+            - 最后我们通过 `connect` 组合这两者，将对应的属性合并进 `AddTodo` 组件并导出。我们现在应该可以在
+            `AddTodo` 组件中取到我们在上面两个函数中定义的 `addTodo` 属性了。
       - file: src/components/AddTodo.js
         display: true
         explain:
           pre: >-
-            ### 编写 Presentational Component
+            ### 编写展示组件
 
 
-            接着我们来编写 AddTodo 的 Presentational Component 部分，打开
-            `src/components/AddTodo.js` 文件，对相应的内容作出如下的修改：
+            接着我们来编写 AddTodo 的展示组件部分，打开 `src/components/AddTodo.js`
+            文件，对相应的内容作出如下的修改：
           post: >-
             可以看到，上面的代码做了这么几件工作：
 
@@ -1629,9 +1602,8 @@ steps:
             ### 修改对应的内容
 
 
-            因为我们将原 `TodoList` 分离成了 "Container Component" `AddTodoContainer` 和
-            "Presentational Component" `TodoList`，所以我们需要对
-            `src/components/App.js` 做出如下的修改：
+            因为我们将原 `TodoList` 分离成了容器组件 `AddTodoContainer` 和展示组件
+            `TodoList`，所以我们需要对 `src/components/App.js` 做出如下的修改：
           post: >-
             可以看到我们使用 `AddTodoContainer` 替换了原来的 `AddTodo` 导出，并在 `render` 方法中渲染
             `AddTodoContainer` 组件。
@@ -1641,9 +1613,8 @@ steps:
         ### 小结
 
 
-        保存修改的内容，你会发现我们的待办事项小应用依然可以完整的运行，但是我们已经成功的将原来的 `AddTodo` 分离成了 Container
-        Component 的 `AddTodoContainer `以及 Presentational Component 的 `AddTodo
-        `了。
+        保存修改的内容，你会发现我们的待办事项小应用依然可以完整的运行，但是我们已经成功的将原来的 `AddTodo` 分离成了容器组件的
+        `AddTodoContainer` 以及展示组件的 `AddTodo` 了。
 
 
         ## 总结
@@ -1652,7 +1623,7 @@ steps:
         到目前为止，我们就已经学习完了 Redux 的所有基础概念，并且运用这些基础概念将一个纯 React 版的待办事项一步一步重构到了 Redux。
 
 
-        让我们再来祭出 Redux 状态循环图，来回顾一下我们在这篇教程中学到的知识：
+        让我们最后一次祭出 Redux 状态循环图，回顾我们在这篇教程中学到的知识：
 
 
         ![](tuture-assets/chapter_11_1-e1a34c69c0882f6a.jpg)
@@ -1691,8 +1662,8 @@ steps:
         `rootReducer` 拆分成了 `todos` 和 `filter` 两个 Reducer。
 
 
-        最后我们更进一步，让 React 专注做好它擅长的编写用户界面的事情，让应用的状态和渲染分离，我们提出了 Presentational
-        Component 和 Container Component 的概念，前者是完完全全的
+        最后我们更进一步，让 React
+        专注做好它擅长的编写用户界面的事情，让应用的状态和渲染分离，我们提出了展示组件和容器组件的概念，前者是完完全全的
         React，接收来自后者的数据，然后负责将数据高效正确的渲染；前者负责响应用户的操作，然后交给后者发出具体的指令，可以看到，当我们使用
         Redux 之后，我们在 React 上盖了一层逻辑，这层逻辑完全负责状态方面的工作，这就是 Redux 的精妙之处啊！
 
@@ -1703,8 +1674,8 @@ steps:
         ## One More Thing!
 
 
-        还有一点比较有意思的就是，细心的读者可能发现了，我们画的 Redux 状态循环图都是单向的，它有一个明确的箭头指向，这其实也是 Redux
-        的哲学，即 ”单向数据流“，也是 React 社区推崇的设计模式，再加上 Reducer
+        细心的读者可能发现了，我们画的 Redux 状态循环图都是单向的，它有一个明确的箭头指向，这其实也是 Redux 的哲学，即
+        ”单向数据流“，也是 React 社区推崇的设计模式，再加上 Reducer
         的纯函数约定，这使得我们整个应用的每一次状态更改都是可以被记录下来，并且可以重现出来，或者说状态是可预测的，它可以追根溯源的找到某一次状态的改变时由某一个
         Action 发起的，所以 Redux 也被冠名为 ”可预测的状态管理容器“。
 
