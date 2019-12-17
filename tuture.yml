@@ -30,6 +30,7 @@ splits:
     start: f706830
     end: daabb3a
     cover: tuture-assets/cover-1.png
+    id: 1fe175a
   - name: Redux 包教包会（二）：趁热打铁，重拾初心
     description: >-
       在这一部分中，我们将趁热打铁，运用上篇教程学到的 Redux 三大核心概念来将待办事项的剩下部分重构完成，它涉及到将 TodoList 和
@@ -39,6 +40,7 @@ splits:
     start: c2259e4
     end: d65c44e
     cover: tuture-assets/cover-2.png
+    id: e78884e
 steps:
   - name: 在我们阅读教程之前
     commit: f706830
