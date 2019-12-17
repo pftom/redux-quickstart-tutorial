@@ -16,9 +16,9 @@ categories:
   - 进阶
 id: 4ada16faecf470bf265f52276bdc9170
 created: '2019-11-28T12:13:49.486Z'
-updated: 2019-12-16T16:06:59.793Z
+updated: 2019-12-17T06:51:58.194Z
 splits:
-  - name: Redux 快速入门教程（一）
+  - name: Redux 包教包会（一）：解救 React 状态危机
     description: >-
       前端应用的状态管理日益复杂。随着大前端时代的到来，前端愈来愈注重处理逻辑，而不只是专注 UI 层面的改进，而以 React
       为代表的前端框架的出现，大大简化了我们编写 UI 界面的复杂度。虽然 React 提供了 State
@@ -28,29 +28,14 @@ splits:
       大大简化了前端逻辑，使得我们能够以高效、便于协作的方式编写任意复杂的前端应用。本篇教程致力于用简短的文字讲透 Redux，在实战中掌握 Redux
       的概念和精髓。
     start: f706830
-    end: 0526fa5
-  - name: Redux 快速入门教程（二）
-    description: >-
-      在一部分我们将介绍 Redux 的三大核心概念：Store，Action，Reducers。Store 用于替代原 React 中的
-      this.state，有着数据的唯一真相来源之称。 Action 用于替代原 React 中发起改变 this.state 的动作，它在 Redux
-      中是用来改变数据的唯一手段。Reducers 是用来响应 Action 指令，更新 Store 状态的纯函数，用于替代原 React 中的
-      this.setState 更新状态方法。
-    start: daa3220
     end: daabb3a
-  - name: Redux 快速入门教程（三）
+  - name: Redux 包教包会（二）：趁热打铁，重拾初心
     description: >-
-      这一部分我们将运用上一部分学到的 Redux 三大核心概念来将待办事项的剩下部分重构完成，它涉及到将 TodoList 和 Footer
-      部分的相关代码 重构到 Redux。最后我们介绍了当 rootReducer 函数逐渐复杂时，我们可以使用 Redux API
-      combineReducers 进行逻辑拆分和组合，使得我们可以 在使用 Redux 便利的同时，又不至于让应用的逻辑看起来臃肿不堪，复用
-      React 组件化的便利，我们可以让状态的处理也 “组件化”。
+      在这一部分中，我们将趁热打铁，运用上篇教程学到的 Redux 三大核心概念来将待办事项的剩下部分重构完成，它涉及到将 TodoList 和
+      Footer 部分的相关代码重构到 Redux，并使用 Redux combineReducers API 进行逻辑拆分和组合，使得我们可以在使用
+      Redux 便利的同时，又不至于让应用的逻辑看起来臃肿不堪，复用 React 组件化的便利，我们可以让状态的处理也 “组件化”。最后，我们将让
+      React 回归初心——专注于展现用户界面，通过“容器组件”和“展示组件”将逻辑和状态进一步分离。
     start: c2259e4
-    end: d129c56
-  - name: Redux 快速入门教程（四）
-    description: >-
-      这一部分我们进一步将状态和渲染剥离，提出了展示组件和容器组件的概念，容器组件用于处理状态相关的内容，展示组件则是 React
-      的领地。当我们进行了这种状态和渲染的剥离之后，你会发现我们使用 Redux 在 React
-      上面盖了一个状态循环图，把和状态有关的内容全部剥离出来了，React 最终只需要专注做好它擅长的事情：更好更高效地构建用户界面！
-    start: 91982ae
     end: d65c44e
 steps:
   - name: 在我们阅读教程之前
@@ -92,6 +77,15 @@ steps:
         display: false
     explain:
       pre: >-
+        欢迎阅读 Redux 包教包会系列：
+
+
+        - Redux 包教包会（一）：解救 React 状态危机
+
+        - [Redux
+        包教包会（二）：趁热打铁，重拾初心](https://juejin.im/post/5df7b11c51882512664b1068)
+
+
         ::: primary
 
         此教程属于[React
@@ -467,14 +461,6 @@ steps:
 
     explain:
       pre: >-
-        ::: primary
-
-        此教程属于[React
-        前端工程师学习路线](https://github.com/tuture-dev/react-roadmap)的一部分，点击可查看全部内容。
-
-        :::
-
-
         我们前面提到了 Store 在 Redux 中的作用是用来保存状态的，相当于我们在前端建立了一个简单的
         ”数据库“。在目前的富状态前端应用中，如果每一次状态的修改（例如点击一个按钮）都需要与后端通信，那么整个网站的平均响应时间将变得难以接受，用户体验将糟糕透顶。
 
@@ -969,6 +955,15 @@ steps:
             定义以及在 `render` 方法中，传给 `TodoList` 的 `toggleTodo` 属性。
     explain:
       pre: >-
+        欢迎阅读 Redux 包教包会系列：
+
+
+        - [Redux 包教包会（一）：解救 React
+        状态危机](https://juejin.im/post/5df62cd8e51d4558270ef5ca)
+
+        - Redux 包教包会（二）：趁热打铁，重拾初心
+
+
         ::: primary
 
         此教程属于[React
@@ -1447,14 +1442,6 @@ steps:
             的 state 赋予一个 `[]` 的默认值。
     explain:
       pre: >-
-        ::: primary
-
-        此教程属于[React
-        前端工程师学习路线](https://github.com/tuture-dev/react-roadmap)的一部分，点击可查看全部内容。
-
-        :::
-
-
         ### 展示组件和容器组件
 
 
