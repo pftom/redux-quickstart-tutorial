@@ -16,7 +16,7 @@ categories:
   - 进阶
 id: 4ada16faecf470bf265f52276bdc9170
 created: "2019-11-28T12:13:49.486Z"
-updated: 2020-01-03T02:33:25.679Z
+updated: 2020-01-03T02:53:10.356Z
 splits:
   - name: Redux 包教包会（一）：解救 React 状态危机
     description: >-
@@ -93,8 +93,9 @@ steps:
 
         - Redux 包教包会（一）：解救 React 状态危机
 
-        - [Redux
-        包教包会（二）：趁热打铁，重拾初心](https://juejin.im/post/5df7b11c51882512664b1068)
+        - [Redux 包教包会（二）：趁热打铁，完全重构](https://tuture.co/2019/11/28/e78884e/)
+
+        - Redux 包教包会（三）：各司其职，重拾初心
 
 
         ::: primary
