@@ -37,7 +37,7 @@ splits:
       Footer 部分的相关代码重构到 Redux，并使用 Redux combineReducers API 进行逻辑拆分和组合，使得我们可以在使用
       Redux 便利的同时，又不至于让应用的逻辑看起来臃肿不堪，复用 React 组件化的便利，我们可以让状态的处理也 “组件化”。
     start: c2259e4
-    end: d65c44e
+    end: d129c56
     cover: tuture-assets/cover-2.png
     id: d129c56
   - name: Redux 包教包会（三）：各司其职，重拾初心
