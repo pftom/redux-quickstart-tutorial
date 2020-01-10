@@ -4,6 +4,7 @@
 我是参考了这些提出的这个问题：
 
 [react-redux一点就透，我这么笨都懂了！](https://juejin.im/post/5af00705f265da0ba60fb844#heading-7)
+
 [文章里提到的sample project](https://github.com/wallaceyuan/react-redux)
 
 ## Question 2
