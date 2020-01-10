@@ -1,14 +1,21 @@
-import React from "react";
+import React, {Component} from "react";
 import PropTypes from "prop-types";
 import Todo from "./Todo";
+import store from "../index";
 
-const TodoList = ({ todos, toggleTodo }) => (
-  <ul>
-    {todos.map(todo => (
-      <Todo key={todo.id} {...todo} onClick={() => toggleTodo(todo.id)} />
-    ))}
-  </ul>
-);
+class TodoList extends Component {
+    render() {
+        let {todos, toggleTodo} = this.props;
+        console.log(store.getState())
+        return (
+            <ul>
+                {todos.map(todo => (
+                    <Todo key={todo.id} {...todo} onClick={() => toggleTodo(todo.id)}/>
+                ))}
+            </ul>
+        );
+    }
+}
 
 TodoList.propTypes = {
   todos: PropTypes.arrayOf(
