@@ -6,7 +6,7 @@ import store from "../index";
 class TodoList extends Component {
     render() {
         let {todos, toggleTodo} = this.props;
-        console.log(store.getState())
+        // console.log(store.getState())
         return (
             <ul>
                 {todos.map(todo => (
