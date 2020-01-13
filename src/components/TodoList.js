@@ -6,6 +6,7 @@ import store from "../index";
 class TodoList extends Component {
     render() {
         let {todos, toggleTodo} = this.props;
+        console.log(todos)
         //文件打包的顺序是有问题的，会调用第一次render的时候store为undefined
         //增加一个todo后会有值
         console.log(store);
