@@ -1,5 +1,4 @@
-const initialState = {
-  todos: [
+const initialState = [
     {
       id: 0,
       text: 1,
@@ -10,8 +9,7 @@ const initialState = {
       text: 2,
       completed: false
     },
-  ]
-}
+  ];
 
 const todos = (state = initialState, action) => {
   switch (action.type) {
