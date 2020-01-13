@@ -8,13 +8,13 @@ class TodoList extends Component {
         let {todos, toggleTodo} = this.props;
         //文件打包的顺序是有问题的，会调用第一次render的时候store为undefined
         //增加一个todo后会有值
-        console.log(store)
+        console.log(store);
         if (typeof(store) === 'undefined') {
-            //当atore不为undefined时，必须加上typeof()，否则还是会走store.getState，然后爆出运行时错误
+            //当store不为undefined时，必须加上typeof()，否则还是会走store.getState，然后爆出运行时错误
             console.log('store is undefined')
         } else {
-            console.log(store.getState())
-            console.log(store.dispatch)
+            console.log(store.getState());
+            console.log(store.dispatch);
         }
         return (
             <ul>
