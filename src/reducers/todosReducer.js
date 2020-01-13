@@ -1,17 +1,17 @@
 const initialState = [
     {
       id: 0,
-      text: 1,
+      text: '1',
       completed: false
     },
     {
       id: 1,
-      text: 2,
+      text: '2',
       completed: false
     },
   ];
 
-const todos = (state = initialState, action) => {
+const todosReducer = (state = initialState, action) => {
   switch (action.type) {
     case "ADD_TODO": {
       return [
@@ -35,4 +35,4 @@ const todos = (state = initialState, action) => {
   }
 };
 
-export default todos;
+export default todosReducer;

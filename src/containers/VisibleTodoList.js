@@ -12,13 +12,13 @@ const getVisibleTodos = function (todos, filter) {
     case VisibilityFilters.SHOW_ACTIVE:
       return todos.filter(t => !t.completed);
     default:
-      throw new Error("Unknown filter: " + filter);
+      throw new Error("Unknown filterReducer: " + filter);
   }
 };
 
 const mapStateToProps = function (state) {
   return {
-    todos: getVisibleTodos(state.todos, state.filter)
+    todosArray: getVisibleTodos(state.todosCustom, state.filterCustom)
   };
 };
 

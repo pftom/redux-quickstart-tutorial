@@ -5,8 +5,8 @@ import store from "../index";
 
 class TodoList extends Component {
     render() {
-        let {todos, toggleTodo} = this.props;
-        console.log(todos)
+        let {todosArray, toggleTodo} = this.props;
+        console.log(todosArray)
         //文件打包的顺序是有问题的，会调用第一次render的时候store为undefined
         //增加一个todo后会有值
         console.log(store);
@@ -19,7 +19,7 @@ class TodoList extends Component {
         }
         return (
             <ul>
-                {todos.map(todo => (
+                {todosArray.map(todo => (
                     <Todo key={todo.id} {...todo} onClick={() => toggleTodo(todo.id)}/>
                 ))}
             </ul>
@@ -28,7 +28,7 @@ class TodoList extends Component {
 }
 
 TodoList.propTypes = {
-  todos: PropTypes.arrayOf(
+  todosArray: PropTypes.arrayOf(
     PropTypes.shape({
       id: PropTypes.number.isRequired,
       completed: PropTypes.bool.isRequired,
