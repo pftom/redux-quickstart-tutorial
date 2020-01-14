@@ -12,4 +12,5 @@ const mapDispatchToProps = function (dispatch) {
     addTodo: text => dispatch(actions.addTodo(text))
   };
 };
-export default connect(mapStateToProps, mapDispatchToProps)(AddTodo);
+// export default connect(mapStateToProps, mapDispatchToProps)(AddTodo);
+export default connect(mapStateToProps, actions)(AddTodo);
