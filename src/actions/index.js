@@ -6,11 +6,13 @@ console.log(initialState)
 let nextTodoId = initialState.length;
 console.log('nextTodoId = ' + nextTodoId);
 
-export const addTodo = text => ({
-  type: "ADD_TODO",
-  id: nextTodoId++,
-  text
-});
+export const addTodoCustom = function (text) {
+    return {
+        type: "ADD_TODO",
+        id: nextTodoId++,
+        text
+    };
+};
 
 export const toggleTodo = id => ({
   type: "TOGGLE_TODO",
