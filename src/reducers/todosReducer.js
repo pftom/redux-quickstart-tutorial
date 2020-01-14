@@ -1,4 +1,4 @@
-const initialState = [
+export const initialState = [
     {
       id: 0,
       text: '1',

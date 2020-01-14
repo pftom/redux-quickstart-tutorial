@@ -1,6 +1,10 @@
+//https://medium.com/@etherealm/named-export-vs-default-export-in-es6-affb483a0910
+//Should use name export instead of default export
+import {initialState} from "../reducers/todosReducer"
 
-
-let nextTodoId = 2;
+console.log(initialState)
+let nextTodoId = initialState.length;
+console.log('nextTodoId = ' + nextTodoId);
 
 export const addTodo = text => ({
   type: "ADD_TODO",
