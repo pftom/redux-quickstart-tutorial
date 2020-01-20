@@ -3,6 +3,7 @@ import { connect } from "react-redux";
 import * as actions from "../actions"
 import AddTodo from "../components/AddTodo";
 import {bindActionCreators} from "redux";
+import {addTodoCustom} from "../actions";
 
 const mapStateToProps = (state, ownProps) => {
   return ownProps;
@@ -24,7 +25,12 @@ const mapDispatchToProps = function (dispatch) {
 // export default connect(mapStateToProps, mapDispatchToProps)(AddTodo);
 
 //方法2：可以
-export default connect(mapStateToProps, actions)(AddTodo);
+// export default connect(mapStateToProps, actions)(AddTodo);
 
 //方法2实际上是下面这个:
 // export default connect(mapStateToProps, dispatch => bindActionCreators(actions, dispatch))(AddTodo);
+
+//方法3：Right statement
+export default connect(mapStateToProps, {addTodoCustom})(AddTodo);
+//TODO(gongzelong): Wrong statement. Why should I need to add the curly brace to the `addTodoCustom`？Because of Javascript Literal?
+// export default connect(mapStateToProps, addTodoCustom)(AddTodo);
