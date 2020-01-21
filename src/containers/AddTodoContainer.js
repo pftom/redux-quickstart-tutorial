@@ -31,6 +31,18 @@ const mapDispatchToProps = function (dispatch) {
 // export default connect(mapStateToProps, dispatch => bindActionCreators(actions, dispatch))(AddTodo);
 
 //方法3：Right statement
-export default connect(mapStateToProps, {addTodoCustom})(AddTodo);
-//TODO(gongzelong): Wrong statement. Why should I need to add the curly brace to the `addTodoCustom`？Because of Javascript Literal?
-// export default connect(mapStateToProps, addTodoCustom)(AddTodo);
+// export default connect(mapStateToProps, {addTodoCustom})(AddTodo);
+// //TODO(gongzelong): Wrong statement. Why should I need to add the curly brace to the `addTodoCustom`？Because of Javascript Literal?
+// // export default connect(mapStateToProps, addTodoCustom)(AddTodo);
+
+
+// 方法4： Right Statement
+export default connect(mapStateToProps, function (dispatch) {
+  return bindActionCreators({addTodoCustom}, dispatch);
+})(AddTodo);
+
+//Wrong Statement
+//TODO(gongzelong): Why this will cause runtime when adding a new task
+// export default connect(mapStateToProps, function (dispatch) {
+//   return bindActionCreators(addTodoCustom, dispatch);
+// })(AddTodo);
