@@ -3,7 +3,7 @@ import { toggleTodo } from "../actions";
 import TodoList from "../components/TodoList";
 import { VisibilityFilters } from "../actions";
 
-const getVisibleTodos = (todos, filter) => {
+const getVisibleTodos = function (todos, filter) {
   switch (filter) {
     case VisibilityFilters.SHOW_ALL:
       return todos;
@@ -12,13 +12,15 @@ const getVisibleTodos = (todos, filter) => {
     case VisibilityFilters.SHOW_ACTIVE:
       return todos.filter(t => !t.completed);
     default:
-      throw new Error("Unknown filter: " + filter);
+      throw new Error("Unknown filterReducer: " + filter);
   }
 };
 
-const mapStateToProps = state => ({
-  todos: getVisibleTodos(state.todos, state.filter)
-});
+const mapStateToProps = function (state) {
+  return {
+    todosArray: getVisibleTodos(state.todosCustom, state.filterCustom)
+  };
+};
 
 const mapDispatchToProps = dispatch => ({
   toggleTodo: id => dispatch(toggleTodo(id))

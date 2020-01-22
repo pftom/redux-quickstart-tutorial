@@ -1119,7 +1119,7 @@ steps:
             语句里，进行数据改变时，要对数组进行操作，并最后返回一个新的数组。
 
             :::
-      - file: src/reducers/filter.js
+      - file: src/reducers/filterReducer.jsucer.js
         display: true
         explain:
           pre: >-
@@ -1441,10 +1441,10 @@ steps:
             接着我们处理一下因 VisibilityFilters 变动而引起的其他几个文件的导包问题。
 
             打开 `src/components/Footer.js` 修改导包路径：
-      - file: src/reducers/filter.js
+      - file: src/reducers/filterReducerReducer.js
         display: true
         explain:
-          pre: 打开 `src/reducers/filter.js` 修改导包路径：
+          pre: 打开 `src/reducers/filterReducerReducer.js` 修改导包路径：
       - file: src/reducers/todos.js
         display: true
         explain:
