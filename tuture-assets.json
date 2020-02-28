@@ -1,5 +1,17 @@
 [
   {
+    "localPath": ".tuture/assets/cover-1.png",
+    "hostingUri": "https://imgkr.cn-bj.ufileos.com/13ffcf5a-f1f4-4fae-87b7-1a04fdd8f155.png"
+  },
+  {
+    "localPath": ".tuture/assets/cover-2.png",
+    "hostingUri": "https://imgkr.cn-bj.ufileos.com/072a38ab-e3ba-46d0-8d68-ad1bb95c8169.png"
+  },
+  {
+    "localPath": ".tuture/assets/cover-3.png",
+    "hostingUri": "https://imgkr.cn-bj.ufileos.com/4ca96f78-e4df-4f7b-8527-8b718a130948.png"
+  },
+  {
     "localPath": ".tuture/assets/image-c272df98562701e3.png",
     "hostingUri": "https://imgkr.cn-bj.ufileos.com/2766edef-b064-46c2-b41d-632fe32e1c23.png"
   },
